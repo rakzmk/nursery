@@ -1,0 +1,147 @@
+
+{% extends "admintemp/index.html" %}
+{% load static %}               
+    {% block content %}
+    
+
+
+                    <div class="container-fluid">
+
+                        <!-- Page Heading -->
+                        <h1 class="h3 mb-2 text-gray-800">Category List</h1>
+                       
+    
+                        <!-- DataTales Example -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary"></h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable1" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>id</th>
+                                                <th>Category</th>
+                                                <th>Edit</th>
+                                                
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <!-- <tr>
+                                                <th>id</th>
+                                                <th>Category</th>
+                                                <th>Edit</th>
+                                                
+                                                
+    
+                                            </tr> -->
+                                        </tfoot>
+    
+                                        <tbody>
+                                            {% for cat in category %}
+                                            <tr>
+                                                <td>{{cat.id}}</td>
+                                                <td>{{cat.category}}</td>
+                                               
+                                                <td>    
+                                                    <!-- <a href="#" class="btn btn-warning btn-xs">Edit</a>  -->
+
+
+                                                    <form action="{% url 'delcategory' cat.id %}" onclick="myFunction()" method="POST" class="d-inline"> {% csrf_token %}
+                
+                                                        <input type="submit" value="Delete" class="btn btn-danger btn-xs">
+                                                    
+                                                    </form>
+                                                    
+                    
+                                                   
+                                                </td>
+                                            </tr>
+                                            
+                                           {% endfor %}
+                                            </tbody>
+                                    </table>
+                                </div>         
+                            </div> 
+    
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.min.js"></script> -->
+
+<!-- <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script> -->
+
+
+
+<!-- Bootstrap core JavaScript-->
+<!-- <script src="{% static 'admin/vendor/jquery/jquery.min.js'%}"></script> -->
+<!-- <script src="{% static 'admin/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script> -->
+
+<!-- Core plugin JavaScript-->
+<!-- <script src="{% static 'admin/vendor/jquery-easing/jquery.easing.min.js'%}"></script> -->
+
+<!-- Custom scripts for all pages-->
+<!-- <script src="{% static 'admin/js/sb-admin-2.min.js'%}"></script> -->
+
+<script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <style src="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css"></style>
+
+    <script>
+        $(document).ready( function () {
+            $('#dataTable1').DataTable();
+        } );
+    </script>
+
+
+<!-- <script>
+
+    $('#but2').click(function () {
+        var catname2 = $('#catname1').val()
+        console.log(catname2)
+        var data = {
+            'csrfmiddlewaretoken': '{{csrf_token}}',
+            'catname3': catname2,
+            
+        }
+        if (catname2 === "") {
+            $('#error2').html("Please enter catogory name")
+
+        }
+        else if (catname2.length<4 || catname2.length>20) {
+            $('#error2').html("Please enter atleast 4 characters")
+        }
+
+        else {
+            $.ajax({
+                url: '/admin1/editcategory/{{cat.id}}',
+                method: 'POST',
+                data: data,
+                dataType: 'json',
+                success: function (data) {
+                    if (data == 'true') {
+                        window.location.replace('/admin1/categorylist/')
+                    }
+                    else if (data == 'false') {
+                        $("#error2").html("category already exists")
+                    }
+
+                }
+
+            })
+        }
+    })
+
+</script> -->
+
+
+
+    {% endblock %} 

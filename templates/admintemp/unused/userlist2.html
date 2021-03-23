@@ -1,0 +1,94 @@
+{% extends "admintemp/index.html" %}
+{% load static %}  
+{% block link %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
+
+{% endblock %}             
+    {% block content %}
+
+
+
+
+<!--bootstrap table-->
+<div style="overflow-x: auto;">
+
+                <table id="userlist" class="table table-striped table-bordered" >
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>Name</th>
+                            <th>Last name</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>Block/delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for us in users %}
+                        <tr>
+                            <td>{{us.user.id}}</td>                
+                            <td>{{us.user.first_name}}</td>
+                            <td>{{us.user.last_name}}</td>
+                            <td>{{us.user.username}}</td>
+                            <td>{{us.user.email}}</td>
+                            <td>{{us.mobile}}</td>
+                            <td>
+                
+                                {%if us.user.is_active == False %}
+                                <a href="{% url 'blockuser' us.id %}" class="btn btn-warning" style="width: 80px;color:black">unblock</a>
+                                {% else %}
+                                <a href="{% url 'blockuser' us.id %}" class="btn btn-warning" style="width: 80px;">block</a>
+                                {% endif %}
+                                <!-- <a href="{% url 'blockuser' us.user.id %}">delete</a> -->
+
+                                <form action="{% url 'delete_user' us.id %}" onclick="myFunction()" method="POST" class="d-inline">{% csrf_token %}
+
+                                    <input type="submit" value="Delete" class="btn btn-danger btn-xs">
+                                
+                                </form>
+                                
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    
+
+                   
+                </table>
+                
+</div>
+                 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+               <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+                <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+                     
+
+                <script>
+                    $(document).ready(function() {
+                        $('#userlist').DataTable();
+                    } );
+                </script>
+
+                <!-- <script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+                <style src="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css"></style>
+            
+                <script>
+                    $(document).ready( function () {
+                        $('#userlist').DataTable();
+                    } );
+
+                </Script> -->
+
+
+
+
+
+
+
+
+
+
+
+
+            {% endblock %}

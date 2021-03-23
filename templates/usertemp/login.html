@@ -1,0 +1,137 @@
+{% extends "usertemp/main.html" %}
+{% load static %}
+{% block content %}
+
+
+<!--Start All Title Box  -->
+<div class="all-title-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Login</h2>
+                <ul class="breadcrum"> 
+                    <!-- <li class="breadcrumb-item"><a href="#">Shop</a></li> -->
+                    <!-- <li class="breadcrumb-item active">Login</li> -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End All Title Box
+ Start Cart  -->
+<div class="cart-box-main">
+    <div class="container">
+        <div class="row new-account-login">
+            <div class="col-sm-6 col-lg-6 mb-3">
+                <div class="title-left">
+                    <div>
+                        {% for message in messages %}
+                       <h3>{{message}}</h3> 
+                       {% endfor %}
+                       <span id="error3"></span>
+                    </div>
+                    <h3 style="color: darkgreen;">Login here</h3>
+                </div>
+                <!-- <h5><a data-toggle="collaps" href="{% static '#formLogin' %}" role="button" aria-expanded="false">Click here to Login</a></h5> -->
+                <form class="mt-3 collaps review-form-box" id="formLogin">
+                    <div class="form-row">
+                       
+                        <div class="submitform col-md-6">
+                            <label for="nputEmail" style="color:black; font-weight: bold;" class="mb-0">User Name</label>
+                            <input type="text" class="form-control" id="fname4" placeholder="Enter Email">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="nputPassword" style="color:black; font-weight: bold;"
+                                class="mb-0">Password</label>
+                            <input type="password" class="form-control" id="pwd4" placeholder="Password">
+                        </div>
+                        <div>
+                            <span id="error2"></span>
+                        </div>
+                    </div>
+                    <button id="but2" type="button" class="btn hvr-hover">Login</button> 
+                    <!-- <a id="" style ="color: rgb(255, 255, 255);width:100px;height:40px;" type="button" href="{% url 'index' %}" class="btn hvr-hover ml-5">Cancel</a> -->
+                </form>
+                
+            </div>
+        </div>
+        <!--plant photo-->
+        <div class="col-sm-6 col-lg-6 mb-3">
+            <!-- <img src="{% static 'admin/img/plant.jpg'%}" alt=""> -->
+
+        </div>
+    </div>
+</div>
+<div style="height:100px;">
+
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+    crossorigin="anonymous"></script>
+
+
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script> -->
+
+
+<!--Ajax for login-->
+<script>
+
+    $('#but2').click(function () {
+        var name1 = $('#fname4').val()
+        var email1 = $('email4').val()
+        var password1 = $('#pwd4').val()
+        console.log(name1, email1, password1)
+
+        var data = {
+            'csrfmiddlewaretoken': '{{csrf_token}}',
+            'name2': name1,
+            'password2': password1,
+            'email2': email1,
+        }
+        if (name1 === "") {
+            $('#error2').html("Please enter username or emailaddress")
+
+        }
+        else if (password1 === "") {
+            $('#error2').html("Please enter password")
+        }
+
+        else {
+            $.ajax({
+                url: '/login/',
+                method: 'POST',
+                data: data,
+                dataType: 'json',
+                success: function (data) {
+                    if (data == 'true') {
+                        window.location.replace('/')
+                    }
+                    if (data == 'false') {
+                        $("#error2").html("Incorrect username or password")
+                    }
+                    if (data == 'blocked'){
+                        alert("User is blocked")
+                        window.location.replace('/')
+                        //$("#error2").html("User name is Blocked")
+                    } 
+
+                }
+
+            })
+        }
+    })
+
+</script>
+
+
+
+
+
+
+
+{% endblock %}

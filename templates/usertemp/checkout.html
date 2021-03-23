@@ -1,0 +1,793 @@
+{% extends "usertemp/main.html" %}
+{% load static %}
+{% block content %}
+{% load static %}
+
+
+
+
+<body style="overflow: visible;">
+    <div class="wrappe">
+
+        <!-- <header class="main-header fixed-menu"> -->
+            <!-- Start Navigation -->
+            <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav on no-full"> -->
+
+
+                <!-- End Navigation -->
+        </header>
+        <!-- End Main Top -->
+
+        <!-- Start Top Search -->
+        <div class="top-search">
+            <div class="container">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    <input type="text" class="form-control" placeholder="Search">
+                    <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
+                </div>
+            </div>
+        </div>
+        <!-- End Top Search -->
+
+        <!-- Start All Title Box -->
+        <div class="all-title-box">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>Checkout</h2>
+                        <ul class="breadcrum">
+                            <!-- <li class="breadcrumb-item"><a href="#">Shop</a></li> -->
+                            <!-- <li class="breadcrumb-item active">Checkout</li> -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End All Title Box -->
+
+        <!-- Start Cart  -->
+        <div class="cart-box-main">
+            <div class="container">
+
+                <div class="row ">
+                    <div class=" mb-3">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12">
+                                <!-- <hr class="col-sm-6 col-lg-6 mb-4"> -->
+            
+                                <!-- <div class="title"> <span>Shipping Address</span> </div>
+                                <div class="d-block my-3">
+                                    <div class="custom-control custom-radio">
+                                        <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked=""
+                                            required="" value="{{address.id}}">
+                                        <label class="custom-control-label" for="address1">address</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input id="debit" name="paymentMethod" type="radio" class="custom-control-input"
+                                            required="">
+                                        <label class="custom-control-label" for="debit">Address2</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input"
+                                            required="">
+                                        <label class="custom-control-label" for="paypal">Address3</label>
+                                    </div>
+                                </div> -->
+            
+                                
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <!-- Button trigger modal -->
+                <div > <a style="color:blanchedalmond" type="button" data-toggle="modal" data-target="#exampleModal" class="ml-auto btn hvr-hover">
+                    Add shipping address</a> </div>
+                   
+                
+                    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    Add Shipping Address -->
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="exampleModalLabel">Add Shipping Address</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="container">
+                                    <div class="row ">
+
+                                        <div class="col-sm-12 col-lg-12 mb-3">
+                                            <div class="checkout-address">
+                                                <!-- <div class="title-left">
+                                                    <h3>Add Shipping address</h3>
+                                                </div> -->
+                                                <form name="form1" id="form1" action="" method="" class="">
+                                                    <div class="row">
+                                                        <div class="col-md-12 mb-3">
+                                                            <label for="firstName">Name *</label>
+                                                            <input type="text" class="form-control" name="name"
+                                                                id="name" placeholder="First name and last name"
+                                                                value="" autocomplete="off">
+                                                            <div class="invalid-feedback"> First name and last name
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 mb-3">
+                                                            <label for="lastName">House Name */ No</label>
+                                                            <input type="text" class="form-control" name="house"
+                                                                id="house" placeholder="House Name / No." value="">
+                                                            <div class="invalid-feedback" autocomplete="off"> House Name / No. </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="username" autocomplete="off">Street name *</label>
+
+                                                        <input type="text" class="form-control" name="street"
+                                                            id="street" placeholder="Streetname" >
+                                        <div class=" invalid-feedback" style="width: 100%;"> Streetname
+                                                    </div>
+
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="city">City *</label>
+                                                <input type="text" class="form-control" name="city" id="city"
+                                                    placeholder="City" autocomplete="off">
+                                                <div class="invalid-feedback"> Please enter a valid email address for
+                                                    shipping updates. </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="address">Ditrict *</label>
+                                                <input type="text" class="form-control" name="district" id="district"
+                                                    placeholder="Ditrict">
+                                                <div class="invalid-feedback"> Please enter your shipping address.
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="address2">State *</label>
+                                                <input type="text" class="form-control" name="state" id="state"
+                                                    placeholder="State" autocomplete="off">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="address2">Pincode *</label>
+                                                <input type="text" class="form-control" name="pincode" id="pincode"
+                                                    placeholder="Pincode">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="address2">Mobile Number *</label>
+                                                <input type="text" class="form-control" name="mobile" id="mobile"
+                                                    placeholder="Mobile">
+                                            </div>
+
+                                            <div>
+                                                <span id="error2"></span>
+                                            </div>
+                                            <div class="row">
+
+                                                <div class="col-md-12 mb-3">
+
+                                                    <div class="col-12 d-flex shopping-box"> <button
+                                                            style="color:white;" name="but1" id="but1" type="button"
+                                                            class="ml-auto btn hvr-hover">Add Address </button>
+                                                    </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <script src="https://code.jquery.com/jquery-3.5.1.js"
+                                            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+                                            crossorigin="anonymous"></script>
+
+
+
+                                        <script>
+
+                                            $('#but1').click(function () {
+                                                var name = $('#name').val()
+                                                var house = $('#house').val()
+                                                var street = $('#street').val()
+                                                var city = $('#city').val()
+                                                var district = $('#district').val()
+                                                var state = $('#state').val()
+                                                var pincode = $('#pincode').val()
+                                                var mobile = $('#mobile').val()
+
+                                                console.log(name, house, street, city, district, state, pincode, mobile)
+
+                                                var data = {
+                                                    'csrfmiddlewaretoken': '{{csrf_token}}',
+                                                    'name': name,
+                                                    'house': house,
+                                                    'street': street,
+                                                    'city': city,
+                                                    'district': district,
+                                                    'state': state,
+                                                    'pincode': pincode,
+                                                    'mobile': mobile,
+                                                }
+                                                if (name.length<3 || name.length>50) {
+                                                    $('#error2').html("Please enter name min 4 characters")
+
+                                                }
+                                                else if (house.length<3 || house.length>50) {
+                                                    $('#error2').html("Please enter house min 4 characters")
+                                                }
+                                                else if (street.length<3 || house.length>20){
+                                                    $('#error2').html("Please enter street min 4 characters")
+                                                }
+                                                else if (city.length<3 || city.length>20){
+                                                    $('#error2').html("Please enter city min 4 characters")
+                                                }
+                                                else if (district.length<3 || district.length>20){
+                                                    $('#error2').html("Please enter district min 4 characters")
+                                                }
+                                                else if (state.length<3 || state.length>20){
+                                                    $('#error2').html("Please enter state min 4 characters")
+                                                }
+                                                else if (pincode.length<6 || pincode.length>7){
+                                                    $('#error2').html("Please enter 6 digits pincode")
+                                                }
+                                                else if (mobile.length<10 || mobile.length>15){
+                                                    $('#error2').html("Please enter 10 digits mobile no")
+                                                }
+
+                                                else {
+                                                    $.ajax({
+                                                        url: '/checkoutaddress/',
+                                                        method: 'POST',
+                                                        data: data,
+                                                        dataType: 'json',
+                                                        success: function (data) {
+                                                            if (data == 'true') {
+                                                                alert("added shipping address successfully")
+                                                                window.location.replace('/checkout/')
+                                                            }
+                                                            if (data == 'false') {
+
+                                                                $("#error2").html("Incorrect username or password")
+                                                            }
+                                                            if (data == 'blocked') {
+                                                                alert("User is blocked")
+                                                                window.location.replace('/checkout/')
+                                                                //$("#error2").html("Shipping address added")
+                                                            }
+
+                                                        }
+
+                                                    })
+                                                }
+                                            })
+
+                                        </script>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Close</button>
+                                            <!-- <button type="btn1" class="btn btn-primary"></button> -->
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--modal end-->
+
+            <div class="row">
+                
+
+
+                <!-- <div class="row"> -->
+                    {% for address in address %}
+                <div class="col-md-">
+                   
+                        <div for="address1" class="card" style="width:10rem;padding:0;">
+                            
+                            <div class="card-body">
+                            
+                            <h5 class="card-title">{{address.id}}</h5>
+
+                            <!-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
+                            <p class="card-text">{{address.address_name}}
+                                <br>{{address.house_name}}, {{address.street_name}},
+                                {{address.city}}, {{address.address_mobile}}
+                            </p>
+                            <!-- <a href="//" class="card-link">Select</a> -->
+                            <div class="">
+                                <input id="but5" name="address" type="radio" onclick="add('{{address.id}}')" value="{{address.id}}">
+                                <label class="custom-control-label" for="">Select</label>
+                            </div>
+                            <div > <a style="color:rgb(1, 125, 5);" type="button" href="{% url 'deleteaddress' address.id %}" class="ml-auto btn">
+                                Delete address</a> </div>
+                                
+                                <div > <a style="color:rgb(1, 125, 5);" onclick="add('{{address.id}}')" type="button" href="" value="{{address.id}}" id="but5" class="ml-auto btn">
+                                    select address</a> </div>
+                                  
+                        </div>
+
+                        <!-- <a href="#" class="card-link">Another link</a> -->
+
+                    </div>
+                </div>
+
+
+                {% endfor %}
+
+                
+                <div class="col-md-6 col-lg-6 ml-5">
+                    <div class="odr-box">
+                        <div class="title-right">
+                            <h3>Shopping cart</h3>
+                        </div>
+                        <div class="rounded p-2 bg-light">
+                            {% for cart in user_cart %}
+                            <div class="media mb-2 border-bottom">
+                                <a href="#"></a><img style="width=100px; height:100px;" class="img-fluid"
+                                    src="{{cart.product.imageurl}}" alt="" /></a>
+                                <div class="media-body"> <a style="padding:.8em;"
+                                        href="">{{cart.product.product}}</a>
+                                    <div class="small text-muted" style="padding:1em;">Price: {{cart.product.price}}
+                                        <span class="mx-2">|</span> Qty: {{cart.count}} <span class="mx-2">|</span>
+                                        Subtotal: ₹ {{total_price}}
+                                    </div>
+                                </div>
+
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-6">
+
+                </div>
+                <div class="col-md-6 col-lg-6">
+                    <div class="order-box">
+                        <div class="title-right">
+                            <h3>Your order</h3>
+                        </div>
+                        <div class="d-flex">
+                            <div class="font-weight-bold">Product</div>
+                            <div class="ml-auto font-weight-bold">Total</div>
+                        </div>
+                        <hr class="my-1">
+                        <div class="d-flex">
+                            <h4>Total</h4>
+                            <div class="ml-auto font-weight-bold"> ₹ {{sub_total}} </div>
+                        </div>
+                        <div class="d-flex">
+                            <h4>Discount</h4>
+                            <div class="ml-auto font-weight-bold"> ₹{{disc}}</div>
+                        </div>
+                        <hr class="my-1">
+                        <div class="d-flex">
+                            <h4>Coupon Discount</h4>
+                            <div class="ml-auto font-weight-bold"> ₹ {{coupon_disc}} </div>
+                        </div>
+                        <div class="d-flex">
+                            <h4>Tax</h4>
+                            <div class="ml-auto font-weight-bold"> ₹ {{tax}} </div>
+                        </div>
+                        <div class="d-flex">
+                            <h4>Shipping Cost</h4>
+                            <div class="ml-auto font-weight-bold"> ₹ {{shipping}} </div>
+                        </div>
+                        <hr>
+                        <div class="d-flex gr-total">
+                            <h5>Grand Total</h5>
+                            <div class="ml-auto h5"> ₹ {{grand_total}}</div>
+                        </div>
+                        <hr>
+                    </div>
+                    <!-- <div class="col-12 d-flex shopping-box"> <a href="checkout.html" class="ml-auto btn hvr-hover">Place
+                        Order</a> </div> -->
+                </div>
+               
+            </div>
+            <div class="title"> <span>Payment</span> </div>
+            <div class="d-block my-3">
+                <form id="submit" method="POST" action="{% url 'paymentpage' %}">
+                <div class="custom-control custom-radio">
+                    <!-- <input id="cod" name="cod" type="radio" onclick="cod()" class="" required> -->
+                    <input id="cod" name="cod" type="radio" class="" value="cod"  checked required>
+                    <label class="custom-control-label" for="credit">COD</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input id="razorpay" name="cod" type="radio" class="" value="razor" required>
+                    <label class="custom-control-label" for="debit">Razor Pay</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input id="paypal" name="cod" type="radio" class="" value="paypal" required>
+                    <label class="custom-control-label" for="paypal">Paypal</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 d-flex shopping-box"> 
+                    <!-- <a href="" type="button" class="ml-auto btn hvr-hover">Place
+                    Order</a> -->
+                    <button style="color: cornsilk;" href="" id="but3"  type="submit" class="ml-auto btn hvr-hover">Place
+                        Order</button> 
+                </div>
+            </form>
+                <!-- <div class="col-md-6 mb-3">
+                    <label for="cc-name">Name on card</label>
+                    <input type="text" class="form-control" id="cc-name" placeholder="" required> <small class="text-muted">Full name as displayed on card</small>
+                    <div class="invalid-feedback"> Name on card is required </div>
+                </div> -->
+                <!-- <div class="col-md-6 mb-3">
+                    <label for="cc-number">Credit card number</label>
+                    <input type="text" class="form-control" id="cc-number" placeholder="" required>
+                    <div class="invalid-feedback"> Credit card number is required </div>
+                </div> -->
+            </div>
+            <div class="row">
+                <!-- <div class="col-md-3 mb-3">
+                    <label for="cc-expiration">Expiration</label>
+                    <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+                    <div class="invalid-feedback"> Expiration date required </div>
+                </div> -->
+                <!-- <div class="col-md-3 mb-3">
+                    <label for="cc-expiration">CVV</label>
+                    <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+                    <div class="invalid-feedback"> Security code required </div>
+                </div> -->
+                <div class="col-md-6 mb-3">
+                    <!-- <div class="payment-icon">
+                        <ul>
+                            <li><img class="img-fluid" src="{% static 'images/payment-icon/1.png'%}" alt=""></li>
+                            <li><img class="img-fluid" src="{% static 'images/payment-icon/2.png'%}" alt=""></li>
+                            <li><img class="img-fluid" src="{% static 'images/payment-icon/3.png'%}" alt=""></li>
+                            <li><img class="img-fluid" src="{% static 'images/payment-icon/5.png'%}" alt=""></li>
+                            <li><img class="img-fluid" src="{% static 'images/payment-icon/7.png'%}" alt=""></li>
+                        </ul>
+                    </div> -->
+                </div>
+            </div>
+            <hr class="mb-1"> </form>
+            <div class="col-12 d-flex shopping-box"> 
+                <!-- <a href="" type="button" class="ml-auto btn hvr-hover">Place
+                Order</a> -->
+                <button style="color: cornsilk;" href="" id="but3"  type="button" class="ml-auto btn hvr-hover">Place
+                    Order</button> 
+            </div>
+    </div>
+    
+ 
+</div>
+</div>
+<
+
+
+            </div>
+
+           
+
+
+
+
+            <!-- <div>
+                <hr class="col-sm-6 col-lg-6 mb-4">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="same-address">
+                    <label class="custom-control-label" for="same-address">Shipping address is the same as my billing
+                        address</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="save-info">
+                    <label class="custom-control-label" for="save-info">Save this information for next time</label>
+                </div>
+
+            </div> -->
+
+
+        </div>
+
+
+        <!-- <hr class="mb-1"> -->
+
+
+
+        
+
+    </div>
+    </div>
+
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <!-- End Cart -->
+    <!-- <script src="{% static 'js/jquery-3.2.1.min.js'%}"></script> -->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.min.js"></script> -->
+
+    <!--    
+    <script>
+		//$().ready(function () {
+			$("#form1").validate({
+                
+				rules: {
+                    
+					name: {
+						required:true,
+						minlength: 4,
+						maxlength: 30,
+						//space:true,
+						//lettersonly: true,
+					},
+					housename: {
+						required:true,
+						minlength: 4,
+						maxlength: 20,
+						//digits: true,
+						
+					},
+					streetname: {
+						required: true,
+                        minlength: 4,
+                        maxlength: 20,
+						
+					},
+					city: {
+						required: true,
+						minlength: 4,
+						maxlength:20,
+						//lettersonly: true,
+					},
+					
+					district: {
+						required: true,
+                        minlength: 4,
+						maxlength:20,
+					},
+                    state: {
+						required: true,
+                        minlength: 4,
+						maxlength:20,
+					},
+                    pincode: {
+						required: true,
+                        minlength: 6,
+						maxlength:6,
+                        digits:true,
+					},
+                    mobile: {
+						required: true,
+                        minlength: 10,
+						maxlength:15,
+                        digits:true,
+                    },
+					
+				},
+				
+						messages:{
+							mobile:{
+							required:"Enter Mobile number",
+							minlength:"Enter atleast 10 numbers",
+							digits:"Enter numbers only",
+							},
+							name:{
+							required:"Enter name",
+							minlength:"Enter at least 4 characters"
+							
+							},
+							housename:{
+                                required:"Enter House name",
+                                minlength:"Enter at least 4 characters"
+							},
+							city:{
+								required:"Enter atleast 4 letters",
+								minlength:"Enter at least 4 characters"
+							},
+							district: {
+                                    required:"Enter atleast 4 letters",
+                                    minlength:"Enter at least 4 characters"
+                            },
+                            state:{
+                                  required:"Enter atleast 4 letters",
+                                    minlength:"Enter at least 4 characters"
+                            },
+                            pincode:{
+                                required:"Enter Pincode",
+                                digits:"Enter numbers only",
+                                minlength:"Enter at 6 digit pincode",
+                                maxlength:"Enter 6 digit pincode"
+
+                            },
+                            mobile:{
+                                required:"Enter Mobile number",
+                                digits:"Enter numbers only",
+                                minlength:"Enter altleast 10 numbers",
+                            },
+					            
+                        },
+                        submitHandler: function(form1) {
+                            $("#form1").valid();
+                            //form1.submit();
+                       console.log("hello reached for sending")
+                       //e.preventDefault()
+                        $.ajax({
+                            url: '/checkoutaddress/',
+                            data: $("#form1").serialize(),
+                            method: 'post',
+                            success: function (response) {
+                                if (response == 'true') {
+                                    //alert("Successfully created account"),
+                                    window.location.replace('/usercart/')
+                                
+                            }
+                            if (response == 'false') {
+            
+                               $('#error1').html("Please enter valid Username or password")
+                            }
+                        }
+                        })
+                    }
+
+
+			});
+		//});
+
+
+	</script> -->
+<script>
+    function add(id){
+    $.ajax({
+        url: '/checkoutadd/'+id,
+        method: 'POST',
+        //data: data,
+        //dataType: 'json',
+        success: function (data) {
+            if (data == 'true') {
+                alert("added selected id shipping address successfully")
+                //window.location.replace('/checkout/')
+            }
+        }
+    })
+}
+
+        </script>
+
+        <script>
+            function cod(){
+                console.log("hello yaar")
+                console.log()
+            $.ajax({
+                url: '/paymentpage/',
+                method: 'POST',
+                //data: data,
+                //dataType: 'json',
+                success: function (data) {
+                    if (data == 'true') {
+                        alert("added order success")
+                        //window.location.replace('/checkout/')
+                    }
+                }
+            })
+        }
+        
+                </script>
+   
+       <script>
+
+        $('#but1').click(function () {
+            var name = $('#name').val()
+            var house = $('#house').val()
+            var street = $('#street').val()
+            var city = $('#city').val()
+            var district = $('#district').val()
+            var state = $('#state').val()
+            var pincode = $('#pincode').val()
+            var mobile = $('#mobile').val()
+
+            console.log(name, house, street, city, district, state, pincode, mobile)
+
+            var data = {
+                'csrfmiddlewaretoken': '{{csrf_token}}',
+                'name': name,
+                'house': house,
+                'street': street,
+                'city': city,
+                'district': district,
+                'state': state,
+                'pincode': pincode,
+                'mobile': mobile,
+            }
+            if (name === "") {
+                $('#error2').html("Please enter username or emailaddress")
+
+            }
+            else if (house === "") {
+                $('#error2').html("Please enter password")
+            }
+
+            else {
+                $.ajax({
+                    url: '/checkoutaddress/',
+                    method: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data == 'true') {
+                            alert("added shipping address successfully")
+                            window.location.replace('/checkout/')
+                        }
+                        if (data == 'false') {
+                            alert("Address added Successfully")
+                            window.location.replace('/checkout/')
+
+                            //$("#error2").html("Address added Successfully")
+                        }
+                        if (data == 'blocked') {
+                            alert("User is blocked")
+                            window.location.replace('/checkout/')
+                            //$("#error2").html("Shipping address added")
+                        }
+
+                    }
+
+                })
+            }
+        })
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+    <footer>
+
+    </footer>
+    <!-- End Footer  -->
+
+    <!-- Start copyright  -->
+
+    <!-- End copyright  -->
+
+    <a href="#" id="back-to-top" title="Back to top" style="">↑</a>
+
+    <!-- ALL JS FILES -->
+
+    <script src="{% static 'js/popper.min.js'%}"></script>
+    <script src="{% static 'js/bootstrap.min.js'%}"></script> -->
+    <!-- ALL PLUGINS -->
+    <!-- <script src="{% static 'js/jquery.superslides.min.js'%}"></script>
+    <script src="{% static 'js/bootstrap-select.js'%}"></script>
+    <script src="{% static 'js/inewsticker.js'%}"></script>
+    <script src="{% static 'js/bootsnav.js.'%}"></script>
+    <script src="{% static 'js/images-loded.min.js'%}"></script>
+    <script src="{% static 'js/isotope.min.js'%}"></script>
+    <script src="{% static 'js/owl.carousel.min.js'%}"></script>
+    <script src="{% static 'js/baguetteBox.min.js'%}"></script>
+   
+    <script src="{% static 'js/contact-form-script.js'%}"></script>
+    <script src="{% static 'js/custom.js'%}"></script><div role="dialog" id="baguetteBox-overlay"><div id="baguetteBox-slider"></div><button type="button" id="previous-button" aria-label="Previous" class="baguetteBox-button"><svg width="44" height="60"><polyline points="30 10 10 30 30 50" stroke="rgba(255,255,255,0.5)" stroke-width="4" stroke-linecap="butt" fill="none" stroke-linejoin="round"></polyline></svg></button><button type="button" id="next-button" aria-label="Next" class="baguetteBox-button"><svg width="44" height="60"><polyline points="14 10 34 30 14 50" stroke="rgba(255,255,255,0.5)" stroke-width="4" stroke-linecap="butt" fill="none" stroke-linejoin="round"></polyline></svg></button><button type="button" id="close-button" aria-label="Close" class="baguetteBox-button"><svg width="30" height="30"><g stroke="rgb(160,160,160)" stroke-width="4"><line x1="5" y1="5" x2="25" y2="25"></line><line x1="5" y1="25" x2="25" y2="5"></line></g></svg></button></div> -->
+
+
+    </div>
+</body>
+{% endblock %}

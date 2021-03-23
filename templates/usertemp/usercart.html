@@ -1,0 +1,493 @@
+{% extends "usertemp/main.html" %}
+{% load static %}
+
+    {% block content %}}
+
+    <style>
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        
+        /* Firefox */
+        input[type=number] {
+          -moz-appearance: textfield;
+        }
+        </style>
+
+    <!-- Start Cart  -->
+    <div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-main table-responsive">
+                        <table class="table" id="here">
+                            <thead>
+                                <tr>
+                                    
+                                    <th>Images</th>
+                                    <th>Product Name</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th>Remove</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for cart in user_cart %}
+                                <tr>
+                                    
+                                    <td class="thumbnail-img"><a href="#"></a><img class="img-fluid" src="{{cart.product.imageurl}}" alt="" /></a>
+                                    </td>
+                                    <td class="name-pr" id="qty4-{{cart.id}}" data-product='{{cart.product.product}}'><a href=""></a> ₹{{cart.product.product}}</a>
+                                              
+                                    </td>
+                                    <td class="price-pr" id="qty5-{{cart.id}}" data-price='{{cart.product.price}}'><p>₹ {{cart.product.price}}</p>
+                                        
+                                    </td>
+                                    <td>
+                                        <div class="qty-input">
+                                            
+                                            <button class="button qty-count qty-count--minus" onclick="minus('{{cart.id}}')" data-cartid="{{cart.id}}" id="minus" data-action="minus" type="button">-</button>
+                                            <input class="product-qty" id="qty-{{cart.id}}" type="number" name="qty" min="1" max="100" value="{{cart.count}}">
+                                            <button class="button qty-count qty-count--add" onclick="plus('{{cart.id}}')" id="plus" data-action="add" data-cartid="{{cart.id}}" type="button">+</button>
+                                           
+                                        </div>
+
+
+                                </td>
+                                    <!-- <td style="width:40px; text-align:center;"  type= "" class="quantity-box"> -->
+                                    
+                                    <td  class="total-pr">
+                                        
+                                        <p  data-total="{{cart.id}}" id="qty6-{{cart.id}}"  value="total">₹ {{cart.total_price}}</p>
+                                        
+                                    </td>
+                                    
+                                    <td class="remove-product"><a class="fas fa-time" href="{% url 'deletecartprod' cart.id %}"></a>
+                                        
+                                    <form action="{% url 'deletecartprod' cart.id %}" onclick="myFunction()" method="POST" class="d-inline"> {% csrf_token %}
+                
+                                        <input type="submit" value="Remove" class="btn btn-danger btn-xs">
+                                    
+                                    </form>
+
+
+                                    </td>
+                                </tr>
+                            
+                                {% endfor %} 
+
+                            </tbody>
+                        </table>
+                        
+                    </div>
+
+
+
+
+
+
+
+                    
+
+                </div>
+            </div>
+
+         
+        
+   
+            <!-- <div class="row my-5">
+                <div class="col-lg-6 col-sm-6">
+                    <div class="coupon-box">
+                        <div class="input-group input-group-sm">
+                            <input class="form-control" placeholder="Enter your coupon code" aria-label="Coupon code" type="text">
+                            <div class="input-group-append">
+                                <button class="btn btn-theme" type="button">Apply Coupon</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-6">
+                <div class="update-box">
+                        <input value="Update Cart" type="submit">
+                    </div>
+                </div>
+            </div> -->
+
+            <div  class="row my-5">
+                <div class="col-lg-8 col-sm-6"></div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="order-box">
+                        <h3>Order summary</h3>
+                        <div  class="d-flex" >
+                            
+                            <h4>Total</h4>
+                            
+                            <div  class="ml-auto font-weight-bold" value="{{sub_total}}">₹ {{sub_total}} </div>
+                           
+                        </div> 
+                        <div class="d-flex">
+                            <h4>Discount</h4>
+                            <div  class="ml-auto font-weight-bold">₹ {{disc}} </div>
+                        </div>
+                        <hr class="my-1">
+                        <div class="d-flex">
+                            <h4>Coupon Discount</h4>
+                            <div class="ml-auto font-weight-bold"> ₹  {{coupon_disc}} </div>
+                        </div>
+                        <div class="d-flex">
+                            <h4>Tax</h4>
+                            <div class="ml-auto font-weight-bold"> ₹ {{tax}}</div>
+                        </div>
+                        <div class="d-flex">
+                            <h4>Shipping Cost</h4>
+                            <div class="ml-auto font-weight-bold">₹{{shipping}}</div>
+                        </div>
+                        <hr>
+                        <div class="d-flex gr-total">
+                            <h5>Grand Total</h5>
+                            <div class="ml-auto h5" value="{{grand_total}}"> {{grand_total}} </div>
+                        </div>
+                        <hr> </div>
+                           
+                </div>
+                <div class="col-12 d-flex shopping-box"><a href="{% url 'checkout'%}" class="ml-auto btn hvr-hover">Checkout</a> </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- End Cart -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+    crossorigin="anonymous"></script>
+
+<!--Ajax for login-->
+<!-- <script>
+$(".button").on("click", function(){
+    
+    var $button = $(this);
+    cartid = $(this).attr("data-cartid");
+    console.log("this is button")
+    var oldValue = $('qty-+cartid').val();
+    if ($button.text() == "+") {
+        var newVal = parseFloat(oldValue) + 1;
+
+    }else{
+        if (oldValue > 1) {
+            var newVal = parseFloat(oldValue) - 1;
+        }else{
+             newVal = 1;
+        }
+    }
+    $('#qty-'+cartid).val(newVal);
+
+});
+
+</script>
+      -->
+
+
+
+
+<!-- script for cart -->
+
+<script>
+    function plus(id){
+        event.preventDefault();
+        var cartid = parseInt(id)
+        console.log('this is',cartid)
+        {% for car in cart %}
+        if(id == {{car.id}}){
+        var qty = $('#qty-'+id).val(); //qty-{{cart.id}}
+        //var add = parseInt(qty) + 1
+       //$("#here").load("#here > *");
+       var price = $('#qty5-'+id).attr("data-price");     
+       var total = parseInt(price) +parseInt(qty * price) ;
+       //document.getElementById('qty6-'+id).innerHTML ='₹ ' + total + '.00';
+
+        var data = {
+            'csrfmiddlewaretoken': '{{csrf_token}}',
+            'cart_id': cartid,
+            'qty': qty,
+            
+        }
+        
+        $.ajax({
+            url: '/updatecartplus/',
+            data: data,
+            method: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                if (data == 'true') {
+                   window.location.replace('/usercart/')
+                }
+                if (data == 'false') {
+                    $("#error2").html("Cannnot add more than 20 products")
+                   // window.location.replace('/usercart/')
+                }
+            }
+        })
+    
+        //var price = $('#qty5-'+id).attr("data-price");
+        //var disc_price = $('#disc_price-'+cartid).attr("data-disc_price");
+        
+        //var total = parseInt(price) +parseInt(qty * price) ;
+        //console.log(cartid,qty,price,total)
+        //document.getElementById('qty6-'+id).innerHTML ='₹ ' + total + '.00';
+        }
+
+       {% endfor %}
+    }
+
+    function minus(id){
+        event.preventDefault();
+        console.log(typeof(id))
+        var cartid = parseInt(id)
+        console.log(typeof(hi))
+        console.log(id)
+        {% for car in cart %}
+        if(id == {{car.id}}){
+        var qty = $('#qty-'+id).val(); //qty-{{cart.id}}
+        console.log("hello this is quantity",qty)
+        //$("#totals").load("#totals");
+        var price = $('#qty5-'+id).attr("data-price");
+        var total = parseInt(qty * price) - parseInt(price) ;
+        //document.getElementById('qty6-'+id).innerHTML = '₹ ' + total + '.00';
+        var data = {
+            'csrfmiddlewaretoken': '{{csrf_token}}',
+            'cart_id': cartid,
+            'qty': qty,
+
+        }
+        
+        $.ajax({
+            url: '/updatecartminus/',
+            data: data,
+            method: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                if (data == 'true') {
+                    //$("#totals").html (data);
+                    window.location.replace('/usercart/')
+                }
+                if (data == 'false') {
+                    alert("Quantity cannot be zero")
+                    window.location.replace('/usercart/')
+                    //$("#error2").html("Incorrect username or password")
+                }
+            }
+        })
+    
+        //var price = $('#qty5-'+id).attr("data-price");
+        //var disc_price = $('#disc_price-'+cartid).attr("data-disc_price");
+        
+       // var total = parseInt(qty * price) - parseInt(price) ;
+        //console.log(cartid,qty,price,total)
+      // document.getElementById('qty6-'+id).innerHTML = '₹ ' + total + '.00';
+        }
+       {% endfor %}
+    }
+
+
+</script>
+
+
+<script>
+
+</script>
+
+<!-- end script for cart -->
+
+<!-- button script -->
+<script>
+    var QtyInput = (function () {
+        var $qtyInputs = $(".qty-input");
+    
+        if (!$qtyInputs.length) {
+            return;
+        }
+    
+        var $inputs = $qtyInputs.find(".product-qty");
+        var $countBtn = $qtyInputs.find(".qty-count");
+        var qtyMin = parseInt($inputs.attr("min"));
+        var qtyMax = parseInt($inputs.attr("max"));
+    
+        $inputs.change(function () {
+            var $this = $(this);
+            var $minusBtn = $this.siblings(".qty-count--minus");
+            var $addBtn = $this.siblings(".qty-count--add");
+            var qty = parseInt($this.val());
+    
+            if (isNaN(qty) || qty <= qtyMin) {
+                $this.val(qtyMin);
+                $minusBtn.attr("disabled", true);
+            } else {
+                $minusBtn.attr("disabled", false);
+                
+                if(qty >= qtyMax){
+                    $this.val(qtyMax);
+                    $addBtn.attr('disabled', true);
+                } else {
+                    $this.val(qty);
+                    $addBtn.attr('disabled', false);
+                }
+            }
+        });
+    
+        $countBtn.click(function () {
+            var operator = this.dataset.action;
+            var $this = $(this);
+            var $input = $this.siblings(".product-qty");
+            var qty = parseInt($input.val());
+    
+            if (operator == "add") {
+                qty += 1;
+                if (qty >= qtyMin + 1) {
+                    $this.siblings(".qty-count--minus").attr("disabled", false);
+                }
+    
+                if (qty >= qtyMax) {
+                    $this.attr("disabled", true);
+                }
+            } else {
+                qty = qty <= qtyMin ? qtyMin : (qty -= 1);
+                
+                if (qty == qtyMin) {
+                    $this.attr("disabled", true);
+                }
+    
+                if (qty < qtyMax) {
+                    $this.siblings(".qty-count--add").attr("disabled", false);
+                }
+            }
+    
+            $input.val(qty);
+        });
+    })();
+    
+</script> 
+
+
+<!-- button css -->
+<!-- <style>
+   
+    $black: #000;
+    $white: #fff;
+    $gray: #ccc;
+    $smoke: #e2e2e2;
+    $disable: #f2f2f2;*/
+    
+    .qty-input {
+        color: $black;
+        background: $white;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+    
+        .product-qty,
+        .qty-count {
+            background: transparent;
+            color: inherit;
+            font-weight: bold;
+            font-size: inherit;
+            border: none;
+            display: inline-block;
+            min-width: 0;
+            height: 1.5rem;
+            line-height: 1;
+            
+    
+            &:focus {
+                outline: none;
+            }
+        }
+    
+        .product-qty {
+            width: 50px;
+            min-width: 0;
+            display: inline-block;
+            text-align: center;
+            appearance: textfield;		
+            
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                appearance: none;
+                margin: 0;
+            }
+        }
+    
+        .qty-count {
+            padding: 0;
+            cursor: pointer;
+            width: 2.5rem;
+            font-size: 1.25em;
+            text-indent: -100px;
+            overflow: hidden;
+            position: relative;
+            
+            &:before, 
+            &:after {
+                content: "";
+                height: 2px;
+                width: 10px;
+                position: absolute;
+                display: block;
+                background: $black;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                margin: auto;
+            }
+            &--minus {
+                border-right: 1px solid $smoke;
+            }
+            &--add {
+                border-left: 1px solid $smoke;
+                &:after {
+                    transform: rotate(90deg);
+                }
+            }
+            
+            &:disabled {
+                color: $gray;
+                background: $disable;
+                cursor: not-allowed;
+                border-color: transparent;
+                
+                &:before,
+                &:after {
+                    background: $gray;
+                }
+            }
+        }
+    }
+    
+    
+
+</style> -->
+
+
+<!-- end button css -->
+
+    <!-- ALL JS FILES -->
+    <script src="{% static 'js/jquery-3.2.1.min.js'%}"></script>
+    <script src="{% static 'js/popper.min.js'%}"></script>
+    <script src="{% static 'js/bootstrap.min.js'%}"></script>
+    <!-- ALL PLUGINS -->
+    <script src="{% static 'js/jquery.superslides.min.js'%}"></script>
+    <script src="{% static 'js/bootstrap-select.js'%}"></script>
+    <script src="{% static 'js/inewsticker.js'%}"></script>
+    <script src="{% static 'js/bootsnav.js'%}"></script>
+    <script src="{% static 'js/images-loded.min.js'%}"></script>
+    <script src="{% static 'js/isotope.min.js'%}"></script>
+    <script src="{% static 'js/owl.carousel.min.js'%}"></script>
+    <script src="{% static 'js/baguetteBox.min.js'%}"></script>
+    <script src="{% static 'js/form-validator.min.js'%}"></script>
+    <script src="{% static 'js/contact-form-script.js'%}"></script>
+    <script src="{% static 'js/custom.js'%}"></script>
+{% endblock %}

@@ -1,0 +1,206 @@
+
+{% extends "admintemp/index.html" %}
+{% load static %}               
+    {% block content %}
+    <!DOCTYPE html>
+<html lang="en">
+
+
+<!-- <body class="bg-gradient-primary"> -->
+
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block">
+                        <img src="{% static 'admin/img/plant1.jpg'%}" alt="">
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-left">
+                                <h1 class="h4 text-gray-900 mb-5">Add Category</h1>
+                            </div>
+                            <form>
+                                <div class="form-group">
+                                    <div class="col-sm-12 mb-3 mb-sm-0">
+                                        <!-- <input type="text" name="catname" class="form-control form-control-user" id="catname1"
+                                            placeholder="Category name"> -->
+                                            <input type="text" id="catname1" placeholder="category name">
+                                    </div>
+                                    
+                                    <span style="color: black;" id="error2"></span>
+                                </div>
+                                <div class="col-sm-12 mb-3 mb-sm-0">
+                                    <button id="but2" type="button" class="btn btn-primary">Add Category</button>
+                                    <button id="but3" href="{% url 'adminpanel' %}" type="button" class="btn btn-primary">Cancel</button>
+                               
+                            </div>
+                               
+                            </form>
+                            <hr>
+                            <!-- <div class="text-center">
+                                <a class="small" href="forgot-password.html">Forgot Password?</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" href="login.html">Already have an account? Login!</a>
+                            </div> -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.min.js"></script> -->
+
+<!-- <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script> -->
+
+
+
+<!-- Bootstrap core JavaScript-->
+<!-- <script src="{% static 'admin/vendor/jquery/jquery.min.js'%}"></script> -->
+<!-- <script src="{% static 'admin/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script> -->
+
+<!-- Core plugin JavaScript-->
+<!-- <script src="{% static 'admin/vendor/jquery-easing/jquery.easing.min.js'%}"></script> -->
+
+<!-- Custom scripts for all pages-->
+<!-- <script src="{% static 'admin/js/sb-admin-2.min.js'%}"></script> -->
+
+<script>
+
+    $('#but2').click(function () {
+        var catname2 = $('#catname1').val()
+        console.log(catname2)
+        var data = {
+            'csrfmiddlewaretoken': '{{csrf_token}}',
+            'catname3': catname2,
+            
+        }
+        if (catname2 === "") {
+            $('#error2').html("Please enter category name")
+
+        }
+        else if (catname2.length<4 || catname2.length>20) {
+            $('#error2').html("Please enter atleast 4 characters")
+        }
+
+        else {
+            $.ajax({
+                url: '/admin1/addcategory/',
+                method: 'POST',
+                data: data,
+                dataType: 'json',
+                success: function (data) {
+                    if (data == 'true') {
+                        window.location.replace('/admin1/categorylist/')
+                    }
+                    else if (data == 'false') {
+                        $("#error2").html("category already exists")
+                    }
+
+                }
+
+            })
+        }
+    })
+
+</script>
+
+
+<!-- <script>
+    $().ready(function () {
+        $("#submitform").validate({
+            rules: {
+                catname: {
+                    required:true,
+                    minlength: 4,
+                    maxlength: 30,
+                    //space:true,
+                    //lettersonly: true,
+                }
+                //password1: {
+                  //  required:true,
+                   // minlength: 4,
+                   // maxlength: 14,
+                    //digits: true,
+                    
+               // }
+                //email: {
+                    //required: true,
+                    //email: true,
+                //},
+                //place: {
+                    //required: true,
+                    //minlength: 4,
+                    //maxlength:12,
+                    //lettersonly: true,
+                //},
+                
+                //message: {
+                    //required: true,
+                    //maxlength:400,
+                //}
+
+                
+            },
+            
+                    messages:{
+                        //mobile:{
+                        //required:"Enter Mobile number",
+                        //minlength:"Enter atleast 10 numbers",
+                        //digits:"Enter numbers only",
+                        //},
+                        username1:{
+                        required:"Enter category name",
+                        minlength:"Enter at least 4 characters"
+                        
+                        }
+                        //email:{
+                        //required:"Enter your Email address",
+                        //email:"Write your Email in @ format"
+                        //},
+                      //  password1:{
+                        //    required:"Enter atleast 4 letters",
+                         //   minlength:"Enter at least 4 characters"
+                        //}
+                        //message: {
+                    //required: "Write your message here",
+                    //maxlength:"Exceeded max limit of 500 characters"
+                        //}
+                            
+            },
+                submitHandler: (submitform, e) => {
+                e.preventDefault()
+                $.ajax({
+                    url: "/admin1/addcategory/",
+                    data: $("#submitform").serialize(),
+                    method: "post",
+                    success: function (response) {
+                        if (response == 'true') {
+                            //alert("Successfully created account"),
+                            window.location.replace('/admin1/adminpanel/')
+                        
+                    }
+                    if (response == 'false') {
+    
+                       $('#error1').html("category already exists")
+                    }
+                }
+                })
+            }
+
+
+        });
+    });
+
+
+</script> -->
+
+    {% endblock %} 

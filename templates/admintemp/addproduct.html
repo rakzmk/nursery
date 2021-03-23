@@ -1,0 +1,523 @@
+{% extends "admintemp/index.html" %}
+{% load static %}
+{% block content %}
+{% block link %}
+<style>
+    .error{
+        font-size: 1rem;
+        color: rgb(136, 136, 136);
+    }
+    
+</style>
+
+{% endblock %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.0.0/cropper.min.css" integrity="sha256-FeDcPwV8ZgxG1MU5L/b2i8clOmqZJKK0eyDHqrQaXxY=" crossorigin="anonymous" />
+<div class="container login-container">
+    <div class="row">
+        <div class="col-md-6 login-form-1">
+            <h3>Add Products</h3>
+            <form id="submitform" method="POST" enctype="multipart/form-data" action="{% url 'addproduct' %}">
+                <!-- <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Product ID" value="" />
+                  </div> -->
+                <!-- <select class="custom-select">
+                    <option selected>Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select> -->
+
+
+                <div class="form-group">
+                    {% csrf_token %}
+                    <label for="exampleFormControlSelect1">Category</label>
+
+                    <select class="form-control" id="category" name="category">
+                        {% for i in category %}
+                        <option>{{i.category}}</option>
+                        {% endfor %}
+                    </select>
+
+
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Product Name</label>
+                    <input id="productname" name="productname" type="text" class="form-control"
+                        placeholder="Product Name" value="">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Price</label>
+                    <input id="price" name="price" type="text" class="form-control" placeholder="Product Price" value=""
+                        >
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Description</label>
+                    <textarea id="description" name="description" class="form-control" rows="3" ></textarea>
+                </div>
+                <div class="custom-file">
+                    
+                    <label class="image_container" for="exampleFormControlFile1">Image1</label>
+                    <input type="file" class="form-control-file" id="image1" name="image1" onchange="readURL(this);"/>
+                    <div class="col-sm-2" name="cropped_result" id="cropped_result" > 
+                    <textarea name="imageurl1" id="imageurl1" cols="30" rows="10" hidden></textarea>
+
+                    <button class="btn btn-primary mt-2" id="crop_button">Crop</button>
+                </div>
+                         
+
+                </div>
+
+
+
+                <div class="custom-file mt-3">
+
+                    <label class="image_container" for="exampleFormControlFile1">Image2</label>
+                    <input type="file" class="form-control-file" id="image2" name="image2" onchange="readURL2(this);"/>
+                    <div class="col-sm-2" name="cropped_result2" id="cropped_result2" > </div>
+                    <button class="btn btn-primary mt-2" id="crop_button2">Crop</button>
+                         
+
+                </div>
+
+                <div class="custom-file mt-3">
+                    <label class="" for="exampleFormControlFile1">Image3</label>
+                    <input type="file" class="form-control-file" id="image3" name="image3"
+                        >
+                </div>
+
+                <div class="form-group mt-5 ml-3 float-right">
+
+                    <a href="{% url 'adminpanel' %}" type="" class="btn btn-primary" value="">Cancel</a>
+
+                </div>
+                <div class="form-group mt-5 ml-5 float-right">
+
+                    <input type="submit" id="but1" class="btn btn-primary" value="Add Product" />
+
+                </div>
+            </form>
+        </div>
+        <div style="background:rgb(250, 246, 249)" class="col-md-6 login-form-2">
+
+            <div>
+                <!-- <img style="width: 100%;height: fit-content;margin: 0;" src="{% static 'admin/img/plant.jpg' %}" alt=""> -->
+                <img id="img1" src="#" alt="your image">
+                <img id="img2" src="#" alt="your image">
+                <!-- <img id="img1" src="#" style="width:30em; height:40em;" alt="your image"> -->
+            </div>
+           
+            <div>
+                
+                    
+            </div>
+        
+            <!-- <h3>Login for Form 2</h3>
+              <form>
+                  <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Your Email *" value="" />
+                  </div>
+                  <div class="form-group">
+                      <input type="password" class="form-control" placeholder="Your Password *" value="" />
+                  </div>
+                  <div class="form-group">
+                      <input type="submit" class="btnSubmit" value="Login" />
+                  </div>
+                  <div class="form-group">
+
+                      <a href="#" class="ForgetPwd" value="Login">Forget Password?</a>
+                  </div>
+              </form>
+          </div>
+      </div> -->
+        </div>
+
+        <style>
+            .login-container {
+                margin-top: 5%;
+                margin-bottom: 5%;
+            }
+
+            .login-form-1 {
+                padding: 5%;
+                box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+            }
+
+            .login-form-1 h3 {
+                text-align: center;
+                color: #333;
+            }
+
+            .login-form-2 {
+                padding: 5%;
+                background: #6ba51e;
+                box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+            }
+
+            .login-form-2 h3 {
+                text-align: center;
+                color: #fff;
+            }
+
+            .login-container form {
+                padding: 0%;
+            }
+
+            .btnSubmit {
+                width: 50%;
+                border-radius: 1rem;
+                padding: 1.5%;
+                border: none;
+                cursor: pointer;
+            }
+
+            .login-form-1 .btnSubmit {
+                font-weight: 600;
+                color: #fff;
+                background-color: #0062cc;
+            }
+
+            .login-form-2 .btnSubmit {
+                font-weight: 600;
+                color: #0062cc;
+                background-color: #fff;
+            }
+
+            .login-form-2 .ForgetPwd {
+                color: #fff;
+                font-weight: 600;
+                text-decoration: none;
+            }
+
+            .login-form-1 .ForgetPwd {
+                color: #0062cc;
+                font-weight: 600;
+                text-decoration: none;
+            }
+        </style>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" -->
+            <!-- integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="  -->
+            <!-- crossorigin="anonymous"></script> -->
+        <!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script> -->
+
+
+
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"></script> -->
+        <!-- <script>
+      $('#but1').click(function () {
+          console.log("hellooo")
+          var category = $('#category').val()
+          var productname = $('#productname').val()
+          var price = $('#price').val()
+          var description = $('#description').val()
+          var image1 = $('#image1').val()
+          var image2 = $('#image2').val()
+          var image3 = $('#image3').val()
+          
+          console.log(category,productname,price,description)
+          var data = {
+              'csrfmiddlewaretoken': '{{csrf_token}}',
+              'category': category,
+              'productname': productname,
+              'price': price,
+              'description': description,
+              'image1': image1,
+              'image2': image2,
+              'image3' : image3,
+          }
+          if (price == "") {
+            $('#error1').html("Enter min 4 and max 10 characters")
+          }
+
+          else if (productname.length < 3 || productname.length > 10) {
+              $('#error1').html("Enter min 4 and max 10 characters")
+          }
+          else if (description.length <10 || description.length >1000) {
+            $('#error1').html("Enter min 10 and max 1000 characters")
+
+        }
+          
+          else {
+              $.ajax({
+                  url: '/admin1/addproduct/',
+                  method: 'POST',
+                  data: data,
+                  datatype: 'json',
+                  success: function (data) {
+                      if (data == 'true') {
+                          alert("Successfully created account"),
+                          window.location.replace('/')
+                          //alert("registered")
+                      }
+                      else if (data == 'false') {
+
+                          $('#error1').html("Username already taken")
+                         
+                          //alert("Username already taken")
+                              //window.location.replace('/register/')
+
+                      }
+                      else if (data == 'false1') {
+                          
+                          $('#error1').html("Email already taken")
+                          //alert("email already taken")
+                          //window.location.replace('/register/')
+
+                      }
+                  }
+              })
+          }
+      })
+  </script> -->
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"
+            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.min.js"></script>
+
+
+
+
+
+        <!-- Bootstrap core JavaScript-->
+        <!-- <script src="{% static 'admin/vendor/jquery/jquery.min.js'%}"></script> -->
+        <!-- <script src="{% static 'admin/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script> -->
+
+        <!-- Core plugin JavaScript-->
+        <!-- <script src="{% static 'admin/vendor/jquery-easing/jquery.easing.min.js'%}"></script> -->
+
+        <!-- Custom scripts for all pages-->
+        <!-- <script src="{% static 'admin/js/sb-admin-2.min.js'%}"></script> -->
+        
+        <!--Script for form validation -->
+        <script>
+            $().ready(function () {
+                $("#submitform").validate({
+                    rules: {
+                        category: {
+                            required: true,
+                            
+                            
+                        },
+                        productname: {
+                            required: true,
+                            minlength: 4,
+                            maxlength: 100,
+                            //digits: true,
+
+                        },
+                        price: {
+                            required: true,
+
+                        },
+                        description: {
+                            required: true,
+                            minlength: 4,
+                            maxlength: 1500,
+                            //lettersonly: true,
+                        },
+
+                        image1: {
+                            required: true,
+                            extension: "jpg|jpeg|png"
+                        },
+                        image2: {
+                            required: true,
+                            extension: "jpg|jpeg|png"
+
+                        },
+                        image3: {
+                            required: true,
+                            extension: "jpg|jpeg|png"
+                        },
+
+                    },
+                    messages: {
+                        category: {
+
+                            required: "Select category",
+
+                        },
+
+                        productname: {
+                            required: "Enter atleast 4 letters",
+                            minlength: "Enter at least 4 characters"
+                        },
+                        price: {
+                            required: "Enter price"
+                        },
+                        description: {
+                            required: "Enter product description",
+
+                        },
+                        image1: {
+                            required: "upload image",
+                            extension: "Only Jpg,PNG files allowed"
+                        },
+                        image2: {
+                            required: "upload image",
+                            extension: "Only Jpg,PNG files allowed"
+                        },
+                        image3: {
+                            required: "upload image",
+                            extension: "Only Jpg,PNG files allowed"
+                        },
+
+                    }
+
+
+                });
+            });
+
+
+        </script>
+
+        <!--End of form validation -->
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.0.0/cropper.min.js"></script>
+      
+
+<!-- <style>
+  .image_container{
+    max-width: 800px;
+    max-height: 450px;
+  }
+
+</style> -->
+
+<!-- trila script -->
+<script>
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      $('#img1').attr('src', e.target.result)
+    };
+    reader.readAsDataURL(input.files[0]);
+    setTimeout(initCropper, 1000);
+  }
+}
+function initCropper(){
+  console.log("Came here")
+  var image = document.getElementById('img1');
+  var cropper = new Cropper(image, {
+    //aspectRatio: 1.08 / 1,
+    cropBoxResizable: false,
+    autoCropArea: 0,
+              //  strict: false,
+               // guides: false,
+              //  highlight: true,
+                dragCrop: true,
+               dragMode: 'move',
+               multiple:true,
+               movable:true,
+               responsive:true,
+               //cropBoxMovable: false,
+                
+                data:{
+                    width: 350,
+                    height:  375,
+                },
+    
+    crop: function(e) {
+      console.log(e.detail.x);
+      console.log(e.detail.y);
+    }
+  });
+
+  // On crop button clicked
+  document.getElementById('crop_button').addEventListener('click', function(){
+    var imgurl =  cropper.getCroppedCanvas().toDataURL();
+    var img = document.createElement("img");
+    img.src = imgurl;
+    document.getElementById("cropped_result").appendChild(img);
+    $('#imageurl1').val(imgurl)
+    console.log($('#imageurl1').val())
+    document.getElementById("cropped_result").appendChild(img);
+
+
+    /* ---------------- SEND IMAGE TO THE SERVER-------------------------
+
+                cropper.getCroppedCanvas().toBlob(function (blob) {
+                      var formData = new FormData();
+                      formData.append('croppedImage', blob);
+                      // Use `jQuery.ajax` method
+                      $.ajax('/path/to/upload', {
+                        method: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function () {
+                          console.log('Upload success');
+                        },
+                        error: function () {
+                          console.log('Upload error');
+                        }
+                      });
+                });
+            ----------------------------------------------------*/
+  })
+}
+
+</script>
+
+<!-- trila script -->
+<script>
+    function readURL2(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $('#img2').attr('src', e.target.result)
+          };
+          reader.readAsDataURL(input.files[0]);
+          setTimeout(initCropper2, 1000);
+        }
+      }
+    function initCropper2(){
+      console.log("Came here")
+      var image = document.getElementById('img2');
+      var cropper = new Cropper(image, {
+        //aspectRatio: 1.08 / 1,
+        //cropBoxResizable: false,
+        autoCropArea: 0,
+                  //  strict: false,
+                   // guides: false,
+                  //  highlight: true,
+                   dragCrop: true,
+                   // dragMode: 'move',
+                   //cropBoxMovable: false,
+                    cropBoxResizable: false,
+                    multiple:true,
+                    movable:true,
+    
+                    data:{
+                        width: 350,
+                        height:  375,
+                    },
+        
+        crop: function(e) {
+          console.log(e.detail.x);
+          console.log(e.detail.y);
+        }
+      });
+    
+      // On crop button clicked
+      document.getElementById('crop_button2').addEventListener2('click', function(){
+        var imgurl2 =  cropper.getCroppedCanvas().toDataURL2();
+        var img2 = document.createElement("img2");
+        img2.src = imgurl2;
+        document.getElementById("cropped_result2").appendChild(img2);
+        $('#imageurl2').val(imgurl2)
+        console.log($('#imageurl2').val())
+        document.getElementById("cropped_result2").appendChild(img2);
+    
+    
+      })
+    }
+    
+    </script>
+
+
+        {% endblock %}

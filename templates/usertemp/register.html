@@ -1,0 +1,221 @@
+{% extends "usertemp/main.html" %}
+{% load static %}               
+    {% block content %}
+
+<!-- Start All Title Box  -->
+<div class="all-title-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Register</h2>
+                <ul class="breadcrum">
+                    <!-- <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                    <li class="breadcrumb-item active">Checkout</li> -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End All Title Box -->
+   
+    <!-- Start Cart  -->
+    <div class="cart-box-main mt-0">
+        <div class="container">
+            <div class="row new-account-login">
+                
+                     
+                <div class="col-sm-6 col-lg-6 mb-3">
+                    <div class="title-left">
+                        <h3>Create New Account</h3>
+                    </div>
+                    <!-- <h5><a data-toggle="collaps" href="{% static '#formRegister' %}" role="button" aria-expanded="false">Click here to Register</a></h5> -->
+                    <form class="mt-3 collaps review-form-box" id="formRegist">
+                        <div class="form-row">
+                            <div class="submitform col-md-6">
+                                <label for="InputName" style="color:black; font-weight: bold;" class="mb-0">First Name</label>
+                                <input type="text" class="form-control" id="name1" placeholder="First Name"> </div>
+                            <div class="form-group col-md-6">
+                                <label for="InputLastname" style="color:black; font-weight: bold;" class="mb-0">Last Name</label>
+                                <input type="text" class="form-control" id="lname1" placeholder="Last Name"> </div>
+                            <div class="form-group col-md-6">
+                                <label for="InputEmail1" style="color:black; font-weight: bold;" class="mb-0">Email Address</label>
+                                <input type="email" class="form-control" id="email1" placeholder="Enter Email"> </div>
+                                <div class="form-group col-md-6">
+                                    <label for="Inputphone1" style="color:black; font-weight: bold;" class="mb-0">Mobile number</label>
+                                    <input type="number" class="form-control" id="mobile1" placeholder="Enter Mobile Number"> </div>
+                                <div class="form-group col-md-6">
+                                        <label for="InputEmail1" style="color:black; font-weight: bold;" class="mb-0">User Name</label>
+                                        <input type="text" class="form-control" id="username1" placeholder="User name"> </div>
+                            <div class="form-group col-md-6">
+                                <label for="InputPassword1" style="color:black; font-weight: bold;" class="mb-0">Password</label>
+                                <input type="password" class="form-control" id="pwd1" placeholder="Password"> </div>
+                        <div>
+                            <span style="color:red;" id="error1"></span>
+                        </div>
+                            </div>
+                            
+                        <button id="but1" type="button" class="btn hvr-hover">Register</button>
+                    </form>
+                </div>
+            </div>
+        
+            <div class="col-sm-6 col-lg-6 mb-3" style="height: 300px" >
+
+
+            </div>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    
+
+
+            <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script> -->
+            <script>
+                $('#but1').click(function () {
+                    console.log("hellooo")
+                    var name2 = $('#name1').val()
+                    var lname2 =$('#lname1').val()
+                    var email2 = $('#email1').val()
+                    var username2 = $('#username1').val()
+                    var mobile2 = $('#mobile1').val()
+                    var pwd2 = $('#pwd1').val()
+                    //var cpwd2 = $('#cpwd1').val()
+                    //var userlen = $('#username1').val()
+                    //var namelen = $('#name1').val()
+                    //dvar pwdlen = $('#pwd1').val()
+                    var atposition=email2.indexOf("@") 
+                    var dotposition=email2.lastIndexOf(".")
+                    console.log(name2,lname2,email2,username2,mobile2,pwd2)
+                    var data = {
+                        'csrfmiddlewaretoken': '{{csrf_token}}',
+                        'name3': name2,
+                        'lname3': lname2,
+                        'mobile3': mobile2,
+                        'email3': email2,
+                        'username3': username2,
+                        'pwd3': pwd2,
+                        //'cpwd3': cpwd2,
+                    }
+                    if (name2.length < 3 || name2.length > 10) {
+                        $('#error1').html("Please enter First name min 4 and max 10 characters")
+                    }
+                    else if (email2 === "") {
+                        $('#error1').html("Please enter valid email")
+        
+                    }
+                    
+                    else if (atposition<1 || dotposition<atposition+2 || dotposition+2>=email2.length){ 
+                                     
+                        $('#error1').html("Please enter a valid e-mail address using @ . formats")
+                        //alert("Please enter a valid e-mail address \n atpostion:"+atposition+"\n dotposition:"+dotposition) 
+                        //alert("Please enter a valid e-mail address \n with @:"+atposition+"\n .co format:"+dotposition)
+                        
+                          
+                    }
+                    else if (username2.length<3 || username2.length>10) {
+                        $('#error1').html("Please enter Username with min 4 and max 10 characters")
+                    }
+                    else if (lname2.length<1 || lname2.length>10) {
+                        $('#error1').html("Please enter Last name with min 4 and max 10 characters")
+                    }
+                    else if (pwd2.length<=3 || pwd2.length >= 11 ) {
+                        $('#error1').html("Please enter a password min 4 and max 10 characters")
+                    }
+                    else if (mobile2.length<=9 || mobile2.length>=15) {
+                        $('#error1').html("Please enter valid 10 digit mobile number")
+        
+                   }
+                    //else if (pwd2 !== cpwd2) {
+                       // $('#error1').html("Password must be same")
+                        
+                   // }
+                    
+                
+        
+                    else {
+                        $.ajax({
+                            url: '/register/',
+                            method: 'POST',
+                            data: data,
+                            datatype: 'json',
+                            success: function (data) {
+                                if (data == 'true') {
+                                    alert("Successfully created account"),
+                                    window.location.replace('/')
+                                    //alert("registered")
+                                }
+                                else if (data == 'false') {
+        
+                                    $('#error1').html("Username already taken")
+                                   
+                                    //alert("Username already taken")
+                                        //window.location.replace('/register/')
+        
+                                }
+                                else if (data == 'false1') {
+                                    
+                                    $('#error1').html("Email already taken")
+                                    //alert("email already taken")
+                                    //window.location.replace('/register/')
+        
+                                }
+                            }
+                        })
+                    }
+                })
+            </script>
+
+            <!--Ajax for login-->
+            <script>  
+        
+                $('#but2').click(function(){
+                    var name1 = $('#fname4').val()
+                    var email1 = $('email4').val()
+                    var password1 = $('#pwd4').val()  
+                    console.log(name1,email1,password1)
+                    var data = {
+                    'csrfmiddlewaretoken' : '{{csrf_token}}',
+                    'name2' : name1,
+                    'password2' : password1,
+                    'email2': email1,
+                    }        
+                if (name1 === "") {
+                    $('#error2').html("Please enter username or emailaddress")
+            
+                }
+                else if (password1 === "") {
+                    $('#error2').html("Please enter password")   
+                }
+        
+                else{  
+                    $.ajax({ 
+                        url:'/login/',
+                        method:'POST',
+                        data: data,
+                        dataType:'json',
+                        success:function(data){
+                            if (data=='true'){
+                                window.location.replace('/') 
+                            }
+                            else if(data=='false'){
+                                $("#error2").html("Incorrect username or password")
+                            } 
+                            
+                        }
+                
+                    })
+                }
+            })
+                        
+            </script>
+
+
+              
+            
+
+
+
+            {% endblock %}
+
+    

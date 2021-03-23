@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Login</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'admin/vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'admin/css/sb-admin-2.min.css'%}" rel="stylesheet">
+<style>
+    .error{
+        font-size: 1rem;
+        color: red;
+        width: 100%;
+    }
+</style>
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block">
+                                <img src="{% static 'admin/img/plant.jpg'%}" alt="">
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Admin Login</h1>
+                                    </div>
+                                    <form id="submitform" class="user">{% csrf_token %}
+                                        <div class="form-group">
+                                            <input name='username1' type="text" class="form-control form-control-user"
+                                                id="username" aria-describedby="emailHelp"
+                                                placeholder="Enter Email Username">
+                                        </div>
+                                        <div class="form-group">
+                                            <input name='password1' type="password" class="form-control form-control-user"
+                                                id="password" placeholder="Password">
+                                        </div>
+                                        <!-- <div class="form-group">
+                                            <div class="custom-control custom-checkbox small">
+                                                <input type="checkbox" class="custom-control-input" id="remember me">
+                                                <label class="custom-control-label" for="customCheck">Remember
+                                                    Me</label>
+                                            </div> -->
+                                        </div>
+                                        <!-- <a href="#" id="btn1" class="btn btn-primary btn-user btn-block">
+                                            Login
+                                        </a> -->
+                                        <div>
+                                            <span style="color: rgb(112, 21, 21); margin-left:4rem;" id="error1"></span>
+                                        </div>
+                                        <button type="submit" style="width: 60%;    margin-left: 5rem;
+                                        " class="btn btn-primary btn-user btn-block mt-5">Login</button>
+                                        <hr>
+                                        <!-- <a href="index.html" class="btn btn-google btn-user btn-block">
+                                            <i class="fab fa-google fa-fw"></i> Login with Google
+                                        </a> -->
+                                        <!-- <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+                                        </a> -->
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <!-- <a class="small" href="forgot-password.html">Forgot Password?</a> -->
+                                    </div>
+                                    <div class="text-center">
+                                        <!-- <a class="small" href="register.html">Create an Account!</a> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+		integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.min.js"></script> -->
+ 
+
+
+
+
+    <!-- Bootstrap core JavaScript-->
+    <!-- <script src="{% static 'admin/vendor/jquery/jquery.min.js'%}"></script> -->
+    <!-- <script src="{% static 'admin/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script> -->
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'admin/vendor/jquery-easing/jquery.easing.min.js'%}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'admin/js/sb-admin-2.min.js'%}"></script>
+    <script>
+		$().ready(function () {
+			$("#submitform").validate({
+				rules: {
+					username1: {
+						required:true,
+						minlength: 4,
+						maxlength: 30,
+						//space:true,
+						//lettersonly: true,
+					},
+					password1: {
+						required:true,
+						minlength: 4,
+						maxlength: 14,
+						//digits: true,
+						
+					}
+					//email: {
+						//required: true,
+						//email: true,
+					//},
+					//place: {
+						//required: true,
+						//minlength: 4,
+						//maxlength:12,
+						//lettersonly: true,
+					//},
+					
+					//message: {
+						//required: true,
+						//maxlength:400,
+					//}
+
+					
+				},
+				
+						messages:{
+							//mobile:{
+							//required:"Enter Mobile number",
+							//minlength:"Enter atleast 10 numbers",
+							//digits:"Enter numbers only",
+							//},
+							username1:{
+							required:"Enter your user name",
+							minlength:"Enter at least 4 characters"
+							
+							},
+							//email:{
+							//required:"Enter your Email address",
+							//email:"Write your Email in @ format"
+							//},
+							password1:{
+								required:"Enter atleast 4 letters",
+								minlength:"Enter at least 4 characters"
+							}
+							//message: {
+						//required: "Write your message here",
+						//maxlength:"Exceeded max limit of 500 characters"
+							//}
+					            
+				},
+					submitHandler: (submitform, e) => {
+					e.preventDefault()
+					$.ajax({
+						url: "/admin1/",
+						data: $("#submitform").serialize(),
+                        method: "post",
+						success: function (response) {
+                            if (response == 'true') {
+                                //alert("Successfully created account"),
+                                window.location.replace('/admin1/adminpanel/')
+							
+						}
+                        if (response == 'false') {
+        
+                           $('#error1').html("Please enter valid Username or password")
+						}
+                    }
+					})
+				}
+
+
+			});
+		});
+
+
+	</script>
+
+</body>
+
+</html>
