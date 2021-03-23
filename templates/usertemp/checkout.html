@@ -399,7 +399,7 @@
             </div>
             <div class="title"> <span>Payment</span> </div>
             <div class="d-block my-3">
-                <form id="submit" method="POST" action="{% url 'paymentpage' %}">
+                <form id="submit" method="" action="">
                 <div class="custom-control custom-radio">
                     <!-- <input id="cod" name="cod" type="radio" onclick="cod()" class="" required> -->
                     <input id="cod" name="cod" type="radio" class="" value="cod"  checked required>
@@ -418,7 +418,7 @@
                 <div class="col-12 d-flex shopping-box"> 
                     <!-- <a href="" type="button" class="ml-auto btn hvr-hover">Place
                     Order</a> -->
-                    <button style="color: cornsilk;" href="" id="but3"  type="submit" class="ml-auto btn hvr-hover">Place
+                    <button style="color: cornsilk;" href="" id="but3"  type="button" class="ml-auto btn hvr-hover">Place
                         Order</button> 
                 </div>
             </form>
@@ -460,7 +460,7 @@
             <div class="col-12 d-flex shopping-box"> 
                 <!-- <a href="" type="button" class="ml-auto btn hvr-hover">Place
                 Order</a> -->
-                <button style="color: cornsilk;" href="" id="but3"  type="button" class="ml-auto btn hvr-hover">Place
+                <button style="color: cornsilk;" href="" id="but8"  type="button" class="ml-auto btn hvr-hover">Place
                     Order</button> 
             </div>
     </div>
@@ -685,7 +685,57 @@
         }
         
                 </script>
-   
+   <script>
+                $('#but3').click(function () {
+                    var cod = $('#cod').val()
+                    var razor = $('#razorpay').val()
+                    var pay = $('#paypal').val()
+                            
+                    console.log(cod, razor, pay)
+        
+                    var data = {
+                        'csrfmiddlewaretoken': '{{csrf_token}}',
+                        'cod': cod,
+                        'razor': razor,
+                        'pay': pay,
+                    }
+                        $.ajax({
+                            url: '/paymentpage/',
+                            method: 'POST',
+                            data: data,
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data == 'true') {
+                                    alert("added shipping address successfully")
+                                    window.location.replace('/checkout/')
+                                }
+                                if (data == 'false') {
+                                    alert("Address added Successfully")
+                                    //window.location.replace('/usercart/')
+        
+                                    //$("#error2").html("Address added Successfully")
+                                }
+                                if (data == 'blocked') {
+                                    alert("User is blocked")
+                                    //window.location.replace('/checkout/')
+                                    //$("#error2").html("Shipping address added")
+                                }
+        
+                            }
+        
+                        })
+                    })
+            
+        
+            </script>
+        
+
+
+
+
+
+
+
        <script>
 
         $('#but1').click(function () {

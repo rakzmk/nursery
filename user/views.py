@@ -389,7 +389,10 @@ def addtocart(request,id):
 def paymentpage(request):
     if request.user.is_active == True and request.user.is_authenticated:
         if request.method == 'POST':
-            tryr= request.POST['value']
+            cod = request.POST['cod']
+            razor = request.POST['razor']
+            pay = request.POST['pay']
+            print("helo", cod,razor,pay)
             value1 = request.session ['checkoutadd']
             print("hello this is session", value1)
             address=Address.objects.get(id=value1)
