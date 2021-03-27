@@ -16,6 +16,7 @@ urlpatterns = [
     path('blockuser/<int:id>',views.blockuser, name='blockuser'),
     path('editproduct/<int:id>',views.editproduct, name='editproduct'),
     path('deleteproduct/<int:id>',views.deleteproduct,name='deleteproduct'),
-    path('adlogout/',views.adlogout,name='adlogout')
-    
+    path('adlogout/',views.adlogout,name='adlogout'),
+    path('orderlist/',views.orderlist, name='orderlist'),
+    path('orderstatus/',views.orderstatus, name='orderstatus'),
 ]

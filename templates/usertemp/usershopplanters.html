@@ -293,9 +293,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="why-text">
-                                                    <a href="{% url 'productdetail' prod.id %}">{{prod.product}}</a>
-                                                    <h4 href="templates/usertemp/productdetail.html">{{prod.product}}</h4>
-                                                    <h5> ₹ {{prod.price}}</h5>
+                                                    <a style="font:bold;font-size:1rem;color:darkgreen" href="{% url 'productdetail' prod.id %}">{{prod.product}}</a>
+                                                    <!-- <h4 href="templates/usertemp/productdetail.html">{{prod.product}}</h4> -->
+                                                    <br>
+                                                    <h5 style="font-family: Arial, Helvetica, sans-serif;"> ₹ {{prod.price}}</h5>
                                                 </div>
                                             </div>
                                         </div>

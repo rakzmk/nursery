@@ -9,7 +9,15 @@ from django.utils.datetime_safe import datetime
 class UserDetail(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     mobile = models.CharField(max_length=50)
+    user_image1 = models.ImageField(upload_to="userimage")
 
+    @property
+    def imageurl4(self):
+        if self.user_image1=='':
+            image = ''
+        else:
+            image = self.user_image1.url
+            return image
 
 class Cart(models.Model):
     product = models.ForeignKey(Products, on_delete = models.CASCADE)
@@ -29,12 +37,19 @@ class Address(models.Model):
     state = models.CharField(max_length=100)
     pincode = models.IntegerField()
 
+
 class Order(models.Model):
     user_id =  models.ForeignKey(User, on_delete = models.CASCADE)
     product = models.ForeignKey(Products, on_delete = models.CASCADE)
     address = models.ForeignKey(Address,on_delete= models.CASCADE)
     price = models.DecimalField(decimal_places=2, max_digits=7)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)
     payment_method = models.CharField(max_length=100)
     status = models.CharField(max_length=50)
     count = models.IntegerField()
+
+
+class Wishlist(models.Model):
+    wish_product = models.ForeignKey(Products,on_delete=models.CASCADE)
+    wish_user = models.ForeignKey(UserDetail,on_delete=models.CASCADE)
+    wish_date = models.DateTimeField(auto_now_add=True)

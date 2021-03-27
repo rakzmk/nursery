@@ -2,7 +2,11 @@
 {% load static %}
 {% block content %}
 {% load static %}
-
+{% block link %}
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+<!-- <script src="https://www.paypal.com/sdk/js?client-id=AQO756NEwe9x149X5dTG0Phn7WiKVUhx6ysrhei5qrqynJdkPGVSobmdOlQdqL383VgqCAbjF_1J09zB&currency=USD"></script> -->
+<script src="https://www.paypal.com/sdk/js?client-id=AVcsCV0inRjcbia5Ns7k5yzJpgxTNhu-761fvd6iJQkP5ucDAecOW3DkAY0v2NkT4bRrZFoqWGkX-OT8&currency=USD"></script>
+{% endblock %}
 
 
 
@@ -88,7 +92,7 @@
                     <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                     Add Shipping Address -->
                 </button>
-
+                
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -110,7 +114,7 @@
                                                 <!-- <div class="title-left">
                                                     <h3>Add Shipping address</h3>
                                                 </div> -->
-                                                <form name="form1" id="form1" action="" method="" class="">
+                                                <form name="form1" id="form1" class="">
                                                     <div class="row">
                                                         <div class="col-md-12 mb-3">
                                                             <label for="firstName">Name *</label>
@@ -189,7 +193,7 @@
 
 
 
-                                        <script>
+                                        <!-- <script>
 
                                             $('#but1').click(function () {
                                                 var name = $('#name').val()
@@ -255,19 +259,14 @@
 
                                                                 $("#error2").html("Incorrect username or password")
                                                             }
-                                                            if (data == 'blocked') {
-                                                                alert("User is blocked")
-                                                                window.location.replace('/checkout/')
-                                                                //$("#error2").html("Shipping address added")
-                                                            }
-
+                                                            
                                                         }
 
                                                     })
                                                 }
                                             })
 
-                                        </script>
+                                        </script> -->
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Close</button>
@@ -281,17 +280,18 @@
                         </div>
                     </div>
                 </div>
-            </div>
+                     </div>
 
             <!--modal end-->
 
-            <div class="row">
+            
                 
-
+            <div class="row">
 
                 <!-- <div class="row"> -->
                     {% for address in address %}
                 <div class="col-md-">
+                    
                    
                         <div for="address1" class="card" style="width:10rem;padding:0;">
                             
@@ -306,8 +306,8 @@
                             </p>
                             <!-- <a href="//" class="card-link">Select</a> -->
                             <div class="">
-                                <input id="but5" name="address" type="radio" onclick="add('{{address.id}}')" value="{{address.id}}">
-                                <label class="custom-control-label" for="">Select</label>
+                                <input id="but5" name="address" type="radio"  onclick="add('{{address.id}}')" value="{{address.id}}">
+                                <label style="margin-left: 10px;color:blue;" class="" for="">Select</label>
                             </div>
                             <div > <a style="color:rgb(1, 125, 5);" type="button" href="{% url 'deleteaddress' address.id %}" class="ml-auto btn">
                                 Delete address</a> </div>
@@ -350,8 +350,9 @@
                         </div>
                     </div>
                 </div>
-
+                
                 <div class="col-md-6 col-lg-6">
+                  
 
                 </div>
                 <div class="col-md-6 col-lg-6">
@@ -388,7 +389,7 @@
                         <hr>
                         <div class="d-flex gr-total">
                             <h5>Grand Total</h5>
-                            <div class="ml-auto h5"> ₹ {{grand_total}}</div>
+                            <div id="" class="ml-auto h5"> ₹ {{grand_total}}</div>
                         </div>
                         <hr>
                     </div>
@@ -399,76 +400,58 @@
             </div>
             <div class="title"> <span>Payment</span> </div>
             <div class="d-block my-3">
-                <form id="submit" method="" action="">
+                <form id="" method="" action="">
+                    <input hidden id="grand_total" value="{{grand_total}}" class="ml-auto h5">
                 <div class="custom-control custom-radio">
-                    <!-- <input id="cod" name="cod" type="radio" onclick="cod()" class="" required> -->
-                    <input id="cod" name="cod" type="radio" class="" value="cod"  checked required>
+                    
+                    <input id="cod3" name="cod3" type="radio" class="" value="cod" required>
+                    <!-- <input id="cod" name="cod3" type="radio" class="" onclick="cod()" value="cod" required> -->
                     <label class="custom-control-label" for="credit">COD</label>
                 </div>
                 <div class="custom-control custom-radio">
-                    <input id="razorpay" name="cod" type="radio" class="" value="razor" required>
+                    <input id="razorpay" name="cod3" type="radio" class="" value="razor" required>
                     <label class="custom-control-label" for="debit">Razor Pay</label>
                 </div>
                 <div class="custom-control custom-radio">
-                    <input id="paypal" name="cod" type="radio" class="" value="paypal" required>
+                    <input id="paypal" name="cod3" type="radio" class="" value="paypal" required>
                     <label class="custom-control-label" for="paypal">Paypal</label>
                 </div>
             </div>
+
+            <div class="col-12 d-flex shopping-box"> 
+
             <div class="row">
-                <div class="col-12 d-flex shopping-box"> 
-                    <!-- <a href="" type="button" class="ml-auto btn hvr-hover">Place
-                    Order</a> -->
-                    <button style="color: cornsilk;" href="" id="but3"  type="button" class="ml-auto btn hvr-hover">Place
+                    
+                    <button style="color: cornsilk;" href="" id="but3" onclick="payment()" type="button" class="ml-auto btn hvr-hover">Place
                         Order</button> 
                 </div>
             </form>
-                <!-- <div class="col-md-6 mb-3">
-                    <label for="cc-name">Name on card</label>
-                    <input type="text" class="form-control" id="cc-name" placeholder="" required> <small class="text-muted">Full name as displayed on card</small>
-                    <div class="invalid-feedback"> Name on card is required </div>
-                </div> -->
-                <!-- <div class="col-md-6 mb-3">
-                    <label for="cc-number">Credit card number</label>
-                    <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                    <div class="invalid-feedback"> Credit card number is required </div>
-                </div> -->
+                
             </div>
             <div class="row">
-                <!-- <div class="col-md-3 mb-3">
-                    <label for="cc-expiration">Expiration</label>
-                    <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-                    <div class="invalid-feedback"> Expiration date required </div>
-                </div> -->
-                <!-- <div class="col-md-3 mb-3">
-                    <label for="cc-expiration">CVV</label>
-                    <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-                    <div class="invalid-feedback"> Security code required </div>
-                </div> -->
                 <div class="col-md-6 mb-3">
-                    <!-- <div class="payment-icon">
-                        <ul>
-                            <li><img class="img-fluid" src="{% static 'images/payment-icon/1.png'%}" alt=""></li>
-                            <li><img class="img-fluid" src="{% static 'images/payment-icon/2.png'%}" alt=""></li>
-                            <li><img class="img-fluid" src="{% static 'images/payment-icon/3.png'%}" alt=""></li>
-                            <li><img class="img-fluid" src="{% static 'images/payment-icon/5.png'%}" alt=""></li>
-                            <li><img class="img-fluid" src="{% static 'images/payment-icon/7.png'%}" alt=""></li>
-                        </ul>
-                    </div> -->
+
+                </div>
+                <div class="col-md-6 mb-3">
+             <!-- paypal -->
+            <div id="paypal-button-container"></div>
+             
+
+             <!-- end paypal -->
+             
+
+
                 </div>
             </div>
             <hr class="mb-1"> </form>
             <div class="col-12 d-flex shopping-box"> 
-                <!-- <a href="" type="button" class="ml-auto btn hvr-hover">Place
-                Order</a> -->
-                <button style="color: cornsilk;" href="" id="but8"  type="button" class="ml-auto btn hvr-hover">Place
-                    Order</button> 
             </div>
     </div>
     
  
 </div>
 </div>
-<
+
 
 
             </div>
@@ -519,6 +502,7 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script> -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.min.js"></script> -->
 
+  
     <!--    
     <script>
 		//$().ready(function () {
@@ -657,7 +641,7 @@
         //dataType: 'json',
         success: function (data) {
             if (data == 'true') {
-                alert("added selected id shipping address successfully")
+                alert("added selected shipping address successfully")
                 //window.location.replace('/checkout/')
             }
         }
@@ -665,71 +649,132 @@
 }
 
         </script>
-
+        <script src= "https://checkout.razorpay.com/v1/checkout.js"></script>
         <script>
-            function cod(){
-                console.log("hello yaar")
-                console.log()
+        
+        function payment(id){
+            var pay=$("input[type='radio'][name='cod3']:checked").val();
+            console.log(pay)
+            var grand_total = $('#grand_total').val()
+            var cod1 = $('#cod3').val()
+            var data = {
+                'csrfmiddlewaretoken': '{{csrf_token}}',
+                'grand_total': grand_total,
+                'cod':cod1
+            }
+            if (pay == 'cod'){
+
             $.ajax({
                 url: '/paymentpage/',
                 method: 'POST',
-                //data: data,
-                //dataType: 'json',
+                data: data,
+                dataType: 'json',
                 success: function (data) {
                     if (data == 'true') {
-                        alert("added order success")
-                        //window.location.replace('/checkout/')
+                        //alert("added order success")
+                        window.location.replace('/paymentsuccess/')
                     }
                 }
             })
-        }
-        
-                </script>
-   <script>
-                $('#but3').click(function () {
-                    var cod = $('#cod').val()
-                    var razor = $('#razorpay').val()
-                    var pay = $('#paypal').val()
-                            
-                    console.log(cod, razor, pay)
-        
-                    var data = {
-                        'csrfmiddlewaretoken': '{{csrf_token}}',
-                        'cod': cod,
-                        'razor': razor,
-                        'pay': pay,
-                    }
-                        $.ajax({
-                            url: '/paymentpage/',
-                            method: 'POST',
-                            data: data,
-                            dataType: 'json',
-                            success: function (data) {
-                                if (data == 'true') {
-                                    alert("added shipping address successfully")
-                                    window.location.replace('/checkout/')
-                                }
-                                if (data == 'false') {
-                                    alert("Address added Successfully")
-                                    //window.location.replace('/usercart/')
-        
-                                    //$("#error2").html("Address added Successfully")
-                                }
-                                if (data == 'blocked') {
-                                    alert("User is blocked")
-                                    //window.location.replace('/checkout/')
-                                    //$("#error2").html("Shipping address added")
-                                }
-        
-                            }
-        
-                        })
-                    })
+            }
+    
+    if (pay == 'paypal') {
+        console.log("hi")  
+        //var total={{value}}
+        //console.log(total)
+        //Render the PayPal button into #paypal-button-container
+        paypal.Buttons({
             
-        
-            </script>
+            // Set up the transaction
+            createOrder: function(data, actions) {
+                
+                return actions.order.create({
+            
+                    purchase_units: [{
+                        amount: {
+                            value: '{{grand_total}}'
+                        }
+                    }]
+                });
+            },
+
+            // Finalize the transaction
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    // Show a success message to the buyer
+                    //alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                    $.ajax({
+                        url:'/paypal/',
+                        method:'get',
+                        success: function (data){
+                            if (data == 'true') {
+                                window.location.replace('/paypalsuccess/')
+                            }
+                        }
+
+
+                    })
+                });
+            }
         
 
+        }).render('#paypal-button-container');
+        //$.ajax({
+           // url: '/paypal1/',
+           // method: 'POST',
+           // data: {'grand_total': grand_total},
+            //dataType: 'json',
+           // success: function (data) {
+                //if (data == 'true') {
+                    //alert("added order success")
+                  //  window.location.replace('/paypal/')
+               // }
+           // }
+       // })
+   }
+
+    if (pay == 'razor') {
+console.log("hi this is razor payment",pay)
+
+    var option = {
+        //"src": "https://checkout.razorpay.com/v1/checkout.js",
+        "key":"rzp_test_kUDC9HszXGYFyA", // Enter the Test API Key ID generated from Dashboard → Settings → API Keys
+        "amount" : "{{grand_total}}"*100, // Amount is in currency subunits. Hence, 29935 refers to 29935 paise or ₹299.35.
+        "currency":"INR",//You can accept international payments by changing the currency code. Contact our Support Team to enable International for your account
+        "order_id":"",//Replace with the order_id generated by you in the backend.
+        "buttontext":"Pay with Razorpay",
+        "name":"{{request.user.username}}",
+        "description":"Amount to be paid",
+        "image":"https://cdn.shortpixel.ai/client/to_avif,q_glossy,ret_img,w_672,h_372/https://planethouseplant.com/wp-content/uploads/2019/12/how-to-care-for-monstera.png",
+        "prefill.name":"{{request.user.username}}",
+        "prefill.email":"{{request.user.email}}",
+        "theme.color":"#F37254",
+        "handler" : function(response){                           
+           
+    $.ajax({
+        url: '/razorpaypage/',
+        method: 'POST',
+        success: function (data) {
+            if (data == 'true') {
+                //alert("added order success")
+                window.location.replace('/razorsuccess/')
+            }
+        }
+    })
+   
+    }
+    
+   
+        }}
+        var razor = new Razorpay(option);
+        razor.open();
+
+    }
+
+</script>
+
+        
+        
 
 
 

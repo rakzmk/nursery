@@ -4,8 +4,14 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from user.models import UserDetail
 from adminlog.models import Categories, Products
-from user.models import Cart, Address, Order
+from .models import Cart, Address, Order
 from django.views.decorators.csrf import csrf_exempt
+#import razorpay
+import os
+
+
+otp = 0
+phone_number = 0
 
 # Create your views here.
 
@@ -16,13 +22,13 @@ def mainpage(request):
     #     return render(request,'usertemp/index.html',{'category': cat})
     if request.user.is_active == True and request.user.is_authenticated:
         cat = Categories.objects.all()
-        cart = Cart.objects.all()
+        cart = Cart.objects.filter(user=request.user)
         context = {'cart': cart ,'category': cat}
         return render(request,'usertemp/index.html',context)
     else:
          cat = Categories.objects.all()
-         cart = Cart.objects.all()
-         context = {'cart': cart ,'category': cat}
+        #  cart = Cart.objects.filter(user=request.user)
+         context = {'category': cat}
          return render(request,'usertemp/index.html',context)
 
     
@@ -138,33 +144,37 @@ def menubar(request,id):
 def usercart(request):
     if request.user.is_active == True and request.user.is_authenticated:
         user_cart = Cart.objects.filter(user=request.user)
-        # if  not user_cart:
-        #     messages = "Your cart is Empty"
-        # else:
-        user_cart = Cart.objects.filter(user=request.user)
-        sub_total=0
-        disc=0
-        coupon_disc=0
-        tax=0
-        shipping=0
-        total_price = 0
-            #disc_sub_total = 0
-        grand_total = 40
-        for cart in user_cart:
-            qty = cart.count
-            price = cart.product.price
-            total_price = qty * price
-            cart.total_price = total_price
-            sub_total = sub_total + total_price
+        if not user_cart:
+            messages = "Your cart is Empty, Please add items to continue."
+            cat = Categories.objects.all()
+            product = Products.objects.all()
+            context = {'messages':messages,'product':product,'category': cat}
             
-            grand_total = sub_total - disc - coupon_disc
-            # context = {cat}
-        user_obj = request.user
-        user = Cart.objects.filter(user=user_obj)
-        product = Products.objects.all()
-        cat = Categories.objects.all()
+        else:
+            user_cart = Cart.objects.filter(user=request.user)
+            sub_total=0
+            disc=0
+            coupon_disc=0
+            tax=0
+            shipping=0
+            total_price = 0
+                #disc_sub_total = 0
+            grand_total = 40
+            for cart in user_cart:
+                qty = cart.count
+                price = cart.product.price
+                total_price = qty * price
+                cart.total_price = total_price
+                sub_total = sub_total + total_price
+                
+                grand_total = sub_total - disc - coupon_disc
+                # context = {cat}
+            user_obj = request.user
+            user = Cart.objects.filter(user=user_obj)
+            product = Products.objects.all()
+            cat = Categories.objects.all()
           
-        context = {'coupon_disc':coupon_disc,'total_price':total_price, 'tax':tax,'shipping':shipping, 'product':product,'category': cat,'cart': user, 'sub_total':sub_total,'grand_total':grand_total, 'user_cart':user_cart,'disc':disc}
+            context = {'coupon_disc':coupon_disc,'total_price':total_price, 'tax':tax,'shipping':shipping, 'product':product,'category': cat,'cart': user, 'sub_total':sub_total,'grand_total':grand_total, 'user_cart':user_cart,'disc':disc}
         return render(request,'usertemp/usercart.html',context)
         
     else:
@@ -176,6 +186,12 @@ def usercart(request):
 def checkout(request):
     if request.user.is_authenticated:
             user_cart = Cart.objects.filter(user=request.user)
+            print("hello this is ",user_cart)
+            #if user_cart == isnull:
+            #print ("iam hereeee")
+            #return redirect (usershop)
+            
+           # else:
             sub_total=0
             disc=0
             coupon_disc=0
@@ -186,6 +202,7 @@ def checkout(request):
                 qty = cart.count
                 price = cart.product.price
                 total_price = qty * price
+                cart=total_price
                 sub_total = sub_total + total_price
                 grand_total = sub_total - disc - coupon_disc
                 
@@ -194,18 +211,10 @@ def checkout(request):
             user = Cart.objects.filter(user=user_obj)
             product = Products.objects.all()
             cat = Categories.objects.all()
-            address = Address.objects.all()
-            context = {'address':address,'coupon_disc':coupon_disc,'tax':tax,'shipping':shipping, 'product':product,'category': cat,'cart': user, 'total_price':total_price, 'sub_total':sub_total,'grand_total':grand_total, 'user_cart':user_cart,'disc':disc}
+            address = Address.objects.filter(user=request.user)
+            context = {'address':address,'coupon_disc':coupon_disc,'tax':tax,'shipping':shipping, 'product':product,'category': cat,'cart': user, 'sub_total':sub_total,'grand_total':grand_total, 'user_cart':user_cart,'disc':disc}
             return render(request,'usertemp/checkout.html',context)
-            
-
-
-            #user1 = Cart.objects.all()
-            #cart = Cart.objects.all()
-           
-            #return render (request, 'usertemp/usercart.html')
-       # else:
-             #return redirect (checkout)
+          
            
     else:
     
@@ -215,7 +224,6 @@ def checkout(request):
 def checkoutadd(request,id):
     if request.user.is_authenticated:
         if request.user.is_active == True:
-            #request.method=='POST'
             request.session['checkoutadd'] = id
             return JsonResponse('true', safe=False)
         else:
@@ -236,19 +244,15 @@ def checkoutaddress(request):
             pincode = request.POST['pincode']
             mobile = request.POST['mobile']
             
-            #if Address.objects.filter(user=request.user).count() == 3:
-                
             Address.objects.create(user=request.user,house_name=house,street_name=street,city=city,district=district, state=state,pincode=pincode,address_mobile=mobile,address_name=name)
             return JsonResponse('false', safe=False)
             
         else:
-            address=Address.objects.all()
+            # address=Address.objects.all()
+            address=Address.objects.filter(user=request.user)
             context={'address':address }
             return render(request,"user/checkout.html", context)
-            #Address.objects.filter(user=request.user):
-            #    address = Address.objects.get(user=request.user)
-             #   address.save()    
-              #  return JsonResponse('true', safe=False)      
+             
                 
     
     else:
@@ -302,27 +306,7 @@ def updatecartminus(request):
                    # count.count = count.count - 1
                 count.save()    
                 return JsonResponse('true', safe=False)
-                  
-                #return JsonResponse('true', safe=False)
-
-
-
-
-
-
-            # cart = Cart.objects.get(id=cart_id)
-            # add = Cart.objects.get(id=cart_id)
-            # add.count = add.count + 1
-            # add.save()
-            # return JsonResponse('true', safe=False)
-        # add = Cart.objects.filter(user=request.user)
-        # if Cart.objects.filter(id=cart, user=request.user).exists():
-        #     add = Cart.objects.get(poduct=cart)
-        #     add.count = add.count + 1
-        #     add.save()
-        
-        # else:
-        #     return JsonResponse('false', safe=False)
+         
     else:
         return redirect (login)
 
@@ -342,9 +326,6 @@ def deletecartprod(request,id):
            
      else:
          return redirect(login)
-
-
-
 
 
 
@@ -390,28 +371,152 @@ def paymentpage(request):
     if request.user.is_active == True and request.user.is_authenticated:
         if request.method == 'POST':
             cod = request.POST['cod']
-            razor = request.POST['razor']
-            pay = request.POST['pay']
-            print("helo", cod,razor,pay)
+            grand_total = request.POST['grand_total']
+            request.session ['grand_total'] = grand_total
+
             value1 = request.session ['checkoutadd']
-            print("hello this is session", value1)
             address=Address.objects.get(id=value1)
-            print(address.address_name, address.user_id)
-            print ("reached here buddy", )
-            return render (request,'usertemp/paymentpage.html')
-        else:
-            print("not reached")
-            # cart= Cart.objects.filter(usser_id=address)
-            #Address.objects.create(user=request.user,house_name=house,street_name=street,city=city,district=district, state=state,pincode=pincode,address_mobile=mobile,address_name=name)      
-        
+            cart = Cart.objects.filter(user_id=address.user_id)
+            for cart in cart:
+                price=cart.count*cart.product.price
+                status = 'ordered'
+                Order.objects.create(user_id=request.user, product=cart.product, address=address, price=price, payment_method=cod, status=status, count=cart.count)
+                cart.delete()
+        return JsonResponse ('true',safe=False)
 
+    else:
+        print("not reached")
             
-               
+        
+def paymentsuccess(request):
+    if request.user.is_authenticated:
+        value = request.session ['checkoutadd']
+        address=Address.objects.get(id=value)
+       # orders = Orders.objects.get(id=value)
+        cat = Categories.objects.all()
+        product = Products.objects.all()
+        context = {'product':product,'category': cat,'address':address }
+        return render(request, 'usertemp/paymentsuccess.html',context)
+
+# @csrf_exempt
+# def paypal1(request):  
+#     if request.user.is_authenticated and request.user.is_active == True:
+#         if request.method == 'POST':
+#             value = request.POST['grand_total']
+#             request.session['grand_total'] = value
+#             print(value)
+#             return JsonResponse ('true', safe=False)
+#             #return render (request, 'usertemp/login.html')  
+
+def paypal(request):
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            return JsonResponse('true', safe=False)
+        
+   
             
-           
-        
-        
+    else:
+       return redirect (login)
+
+def paypalsuccess(request):
+    if request.user.is_authenticated:
+        #if request.method == 'POST':
+        value1 = request.session ['checkoutadd']
+        address=Address.objects.get(id=value1)
+        cart = Cart.objects.filter(user_id=address.user_id)
+        paypal = 'paypal'
+        status = 'ordered'
+        print("reached here buddyyyy")
+        for cart in cart:
+            price=cart.count*cart.product.price
+            Order.objects.create(user_id=request.user, product=cart.product, address=address, price=price, payment_method=paypal, status=status, count=cart.count)
+            cart.delete()
     
-        
+        value = request.session ['checkoutadd']
+        address=Address.objects.get(id=value)
+        print("hello this th place")
+        return render(request,'usertemp/paypalsuccess.html', {'address':address}) 
+        # return JsonResponse('true', safe=False)
 
-          
+@csrf_exempt
+def razorpaypage(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+           
+            #return render (request, 'usertemp/index.html', {'value':value})
+            return JsonResponse('true',safe=False)
+
+def razorsuccess(request):
+    if request.user.is_authenticated:
+        #if request.method == 'POST':
+            #cod = request.POST['cod']
+            #grand_total = request.POST['grand_total']
+            #request.session ['grand_total'] = grand_total
+
+            value1 = request.session ['checkoutadd']
+            address=Address.objects.get(id=value1)
+            cart = Cart.objects.filter(user_id=address.user_id)
+            razor = 'razor_pay'
+            status = 'ordered'
+            for cart in cart:
+                price=cart.count*cart.product.price
+                Order.objects.create(user_id=request.user, product=cart.product, address=address, price=price, payment_method=razor, status=status, count=cart.count)
+                cart.delete()
+       
+            value = request.session ['checkoutadd']
+            address=Address.objects.get(id=value)
+            print("hello this th place")
+            return render(request,'usertemp/razorsuccess.html', {'address':address})    
+            #return JsonResponse ('true',safe=False)
+
+
+def userprofile(request):
+    if request.user.is_authenticated:
+        user1 = User.objects.get(id=request.user.id)
+        print("hello", user1)
+        user = UserDetail.objects.get(user=user1)
+        value = Order.objects.filter(user_id=user1)
+        # value1 = Products.objects.get(price=value)
+        # print(value1.price, value1.count)
+        # for value in value1:
+        #     qty = value1.count
+        #     price = value1.price
+        #     total_price = qty*price
+        #     value.total_price = total_price
+            
+      
+        cat = Categories.objects.all()
+        product = Products.objects.all()
+        context = {'user':user,'user1':user1,'messages':messages,'product':product,'category': cat,'value':value}
+        return render(request, 'usertemp/userprofile.html',context)
+        
+        
+def edituserprofile(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            user = User.objects.get(username=request.user)
+            user1 = UserDetail.objects.get(user_id=user)
+            user.first_name = request.POST ['name']
+            user.last_name = request.POST ['lname']
+            user.email = request.POST ['email']
+            user1.mobile = request.POST['mobile']
+           # user.username = method.POST['username']
+            print(user.first_name,user.last_name,user.email)
+            print("reached here safely")
+            #if User.objects.filter(username=user.username).exclude(request.user).exists():
+                #return JsonResponse('false', safe=False)
+            if User.objects.filter(email=user.email).exclude(username=request.user).exists():
+                print("false")
+                return JsonResponse('false', safe=False)
+            elif UserDetail.objects.filter(mobile=user1.mobile).exclude(user=request.user).exists():
+                print("false1")
+                return JsonResponse('false1', safe=False)
+            else:
+                 
+                user.save()
+                user1.save()
+                print("true")
+                return JsonResponse('true', safe=False)
+    else:
+        return redirect (login)
+         

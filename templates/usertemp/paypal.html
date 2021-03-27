@@ -1,0 +1,130 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body class="bg-gradient-primary">
+    
+
+
+
+
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block">
+                                <img style="width: 100%;" src="{% static '/images/plant2.png'%}" alt="">
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Thank you</h1>
+                                        <h3 class="h3 text-gray-900 mb-4">Your order placed under COD{{value}}</h3>
+                                    </div>
+                                    <!-- paypal -->
+                                        
+                                        <div id="paypal-button-container"></div>
+
+                                        <!-- Include the PayPal JavaScript SDK -->
+                                        <script src="https://www.paypal.com/sdk/js?client-id=AQO756NEwe9x149X5dTG0Phn7WiKVUhx6ysrhei5qrqynJdkPGVSobmdOlQdqL383VgqCAbjF_1J09zB&currency=INR"></script>
+                                    
+                                        <script>
+                                            var total={{value}}
+                                            // Render the PayPal button into #paypal-button-container
+                                            paypal.Buttons({
+                                                
+                                                // Set up the transaction
+                                                createOrder: function(data, actions) {
+                                                    
+                                                    return actions.order.create({
+                                                
+                                                        purchase_units: [{
+                                                            amount: {
+                                                                value: total
+                                                            }
+                                                        }]
+                                                    });
+                                                },
+                                    
+                                                // Finalize the transaction
+                                                onApprove: function(data, actions) {
+                                                    return actions.order.capture().then(function(details) {
+                                                        // Show a success message to the buyer
+                                                        alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                                                        $(ajax)({
+                                                            url:'/paypalsuccess',
+                                                            success: function (data){
+                                                                if (data == 'true') {
+                                                                    window.location.replace('/paypalsuccess/')
+                                                                }
+                                                            }
+
+
+                                                        })
+                                                    });
+                                                }
+                                    
+                                    
+                                            }).render('#paypal-button-container');
+                                        </script>
+                                    
+                                    
+                                    <!-- paypal -->
+                                    
+
+                                        <!-- <div>
+                                            <button style="color: cornsilk;" href="{% url 'usershop' %}" id="but8"  type="submit" class="ml-auto btn hvr-hover">Go Back to shopping</button> 
+                                    
+                                            </div> -->
+                                       
+                                   
+                                      
+                                        
+                                
+                                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>d
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+    crossorigin="anonymous"></script>
+
+
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script> -->
+
+
+<!--Ajax for login-->
+</body>
+
+
+
+
+
+

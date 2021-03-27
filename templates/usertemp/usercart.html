@@ -16,10 +16,26 @@
           -moz-appearance: textfield;
         }
         </style>
-
+        
     <!-- Start Cart  -->
+    <div class="container text-center">
+    {% if messages %}
+    <div class="card">
+        <div class="card-header"></div>
+        <div class="card-body">
+        <blockquote class="blockquote mb-0">
+        <h1>{{messages}}<h1>
+      <div style="height:100px;"></div>
+  
+</div>
+</div>
+</div>
+    {% endif %}
+    {% if not messages %}
     <div class="cart-box-main">
         <div class="container">
+ 
+       
             <div class="row">
                 <div class="col-lg-12">
                     <div class="table-main table-responsive">
@@ -33,7 +49,7 @@
                                     <th>Quantity</th>
                                     <th>Total</th>
                                     <th>Remove</th>
-                                   
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -83,7 +99,7 @@
 
                             </tbody>
                         </table>
-                        
+                       
                     </div>
 
 
@@ -92,7 +108,7 @@
 
 
 
-                    
+                        
 
                 </div>
             </div>
@@ -117,7 +133,7 @@
                     </div>
                 </div>
             </div> -->
-
+            
             <div  class="row my-5">
                 <div class="col-lg-8 col-sm-6"></div>
                 <div class="col-lg-4 col-sm-6">
@@ -153,13 +169,15 @@
                             <div class="ml-auto h5" value="{{grand_total}}"> {{grand_total}} </div>
                         </div>
                         <hr> </div>
-                           
+                             
                 </div>
                 <div class="col-12 d-flex shopping-box"><a href="{% url 'checkout'%}" class="ml-auto btn hvr-hover">Checkout</a> </div>
             </div>
-
+            {% endif %} 
         </div>
+        
     </div>
+</div>
     <!-- End Cart -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
     integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
@@ -490,4 +508,5 @@ $(".button").on("click", function(){
     <script src="{% static 'js/form-validator.min.js'%}"></script>
     <script src="{% static 'js/contact-form-script.js'%}"></script>
     <script src="{% static 'js/custom.js'%}"></script>
+    
 {% endblock %}

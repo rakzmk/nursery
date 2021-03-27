@@ -1,0 +1,88 @@
+{% extends "admintemp/index.html" %}
+{% load static %}               
+
+{% block link %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
+
+{% endblock %} 
+{% block content %}
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Product List</h1>
+                    
+                    
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <div>
+                                <a type="submit" href="{% url 'addproduct' %}"  class="btn btn-success">Add Product</a>
+                            </div>
+                            <h6 class="m-0 font-weight-bold text-primary"></h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="productlist" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>id</th>
+                                            <th>Category</th>
+                                            <th>Product Name</th>
+                                            <th>Price</th>
+                                            <th>Description</th>
+                                            <th>Image1</th>
+                                            <th>Image2</th>
+                                            <th>Image3</th>
+                                            <th>Edit/Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for prod in products %}
+                                        <tr>
+                                            <td>{{prod.id}}</td>  
+                                            <td>{{prod.category.category}}</td>
+                                            <td>{{prod.product}}</td>
+                                            <td>{{prod.price}}</td>
+                                            <td>{{prod.description}}</td>
+                                            <td><img src="{{prod.imageurl}}" alt="" style="width: 9rem;"></td>
+                                            <td><img src="{{prod.imageurl2}}" alt="" style="width: 9rem;"></td>
+                                            <td><img src="{{prod.imageurl3}}" alt="" style="width: 9rem;"></td>
+                                            
+                                            <td>
+                                                <a href="{% url 'editproduct' prod.id %}" class="btn btn-warning btn-xs">Edit</a>
+                                                
+                                                <form action="{% url 'deleteproduct' prod.id %}" href="" method="POST" class="d-inline">{% csrf_token %}
+                
+                                                    <input type="submit" value="Delete" class="btn btn-danger btn-xs">
+                                                
+                                                </form>
+                                                
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>         
+                        </div> 
+
+                        </div>
+                    </div>
+                    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+                    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+                    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+                         
+    
+<!-- <script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<style src="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css"></style> -->
+                    <script>
+                        $(document).ready(function() {
+                            $('#productlist').DataTable();
+                        } );
+                    </script>
+    
+            {% endblock %}

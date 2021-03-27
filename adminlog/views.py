@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
-from user.models import UserDetail
+from user.models import UserDetail, Order
 from . models import Categories
 from . models import Products
 from django.core.files import File
@@ -236,6 +236,34 @@ def deleteproduct(request,id):
             proddel = Products.objects.get(pk=id)
             proddel.delete()
             return redirect(productlist)
+
+def orderlist(request):
+    if request.session.has_key("setkey"):
+
+        order = Order.objects.all()
+        context={'order':order}
+
+        return render(request,'admintemp/orderlist.html',context)
+
+def orderstatus(request):
+    if request.session.has_key("setkey"):
+        if request.method == 'POST':
+            orderid = request.POST ['orderid']
+            order = Order.objects.get(id=orderid)
+            
+            if request.POST ['clicked'] == 'Shipped':
+                print("hello there I have reached")
+                order.status = 'shipped'
+                order.save()
+                return JsonResponse('true', safe=False)
+            elif request.POST['clicked'] == 'Delivered':
+                print("hello the")
+                order.status = 'delivered'
+                order.save()
+            return JsonResponse('true', safe=False)
+
+
+
 
 def adlogout(request):
     if request.session.has_key("setkey"):

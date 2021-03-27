@@ -175,6 +175,7 @@
                         {% if user.is_authenticated %}
                         
                         <li class="nav-item"><a class="nav-link" href="{% url 'logout'%}">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'userprofile'%}">Profile</a></li>
                         {% else %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'login'%}">Login</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'register'%}">Register</a></li>
@@ -206,7 +207,7 @@
                             <div class="cart1">
 
                                 <!--new cart -->
-                                <!-- <div style="min-height: 0px;" class="cart-icon">
+                                <div style="min-height: 0px;" class="cart-icon">
                                     <a href="{% url 'usercart' %}">
                                   <img style="width:36px; height: auto; position: relative;
                                   display: block; margin-top:1em;"
@@ -221,17 +222,17 @@
                                 font-size: 9px;
                                 font-weight: bold;
                                 padding: 3px 6px;
-                                border-radius: 9px;margin-top: 2em;" class="cart-badge">{{cart.count}}</div>
-                              </div> -->
+                                border-radius: 9px;margin-top: 2em;" class="cart-badge" placeholder="0">{{cart.count}}</div>
+                              </div>
 
                              <!--End new cart -->
 
-							 <a type="submit" href="{% url 'usercart' %}">'
+							 <!-- <a type="submit" href="{% url 'usercart' %}">'
                                 <i style="font-size: 1.2rem;" class="fas fa-shopping-cart"></i></i><span class="badge">{{cart.count}}</span><p></p> 
 		 
 								
 								
-							</a>
+							</a> -->
                             
 						</li>
                     </ul> 
@@ -241,7 +242,9 @@
                 <!-- End Atribute Navigation -->
             </div>
             <div class="float-right mr-5">
+                
                 <h4>Welcome,   <span style="color: rgb(23, 121, 3); font-weight: bold; text-transform: capitalize;">{{request.user}}</span></h4>
+                
             </div>
             <!--Start Side Menu -->
             <div class="side">

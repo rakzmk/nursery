@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
     path('',views.mainpage, name='index'),
     path('login/',views.login , name='login'),
@@ -21,6 +22,18 @@ urlpatterns = [
     path('deleteaddress/<int:id>',views.deleteaddress, name = 'deleteaddress'),
     path('checkoutadd/<int:id>',views.checkoutadd, name='checkoutadd'),
     path('paymentpage/',views.paymentpage, name='paymentpage'),
+    path('paymentsuccess/',views.paymentsuccess, name ='paymentsuccess'),
+    # path('paypal1/',views.paypal1, name='paypal1'),
+    path('paypal/',views.paypal, name='paypal'),
+    path('paypalsuccess/',views.paypalsuccess, name = 'paypalsuccess'),
+    #path('razorpay/',views.razorpay, name = 'razorpay'),
+    path('razorsuccess/',views.razorsuccess,name='razorsuccess'),
+    path('razorpaypage/',views.razorpaypage,name='razorpaypage'),
+    path('userprofile/', views.userprofile, name = 'userprofile'),
+    path('edituserprofile/',views.edituserprofile, name='edituserprofile'),
+    
+    # path('paymentrazor/', views.paymentrazor, name='paymentraor'),
+    # path('paymentpaypal/', views.paymentpaypal,name='paymentpaypal'),
 
     
 ]

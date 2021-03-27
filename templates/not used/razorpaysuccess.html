@@ -1,0 +1,118 @@
+{% extends "usertemp/main.html" %}
+{% load static %}
+{% block content %}
+
+
+<!--Start All Title Box  -->
+<div class="all-title-bo">
+ 
+</div>
+<!-- End All Title Box
+ Start Cart  -->
+
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block">
+                                <img style="width: 100%;" src="{% static '/images/plant2.png'%}" alt="">
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Thank you</h1>
+                                        <h3 class="h3 text-gray-900 mb-4">Your order placed under Paypal</h3>
+                                    </div>
+                                    <form id="submitform" class="user">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                  <div class="card">
+                                                    <div class="card-body">
+                                                      <h5 class="card-title">Your Items will be shipped Soon to</h5>
+                                                      <p style="font-size: medium;" class="card-text">{{address.address_name}}<br>{{address.house_name}},{{address.street_name}},<br> {{address.city}}, {{address.district}}<br>{{address.state}},{{address.pincode}}</p>
+                                                      
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                            
+                                              </div>
+
+                                             
+
+                                        </div>
+                                        <div>
+                                            <button style="color: cornsilk;" href="{% url 'usershop' %}" id="but8"  type="submit" class="ml-auto btn hvr-hover">Go Back to shopping</button> 
+                                    
+                                            </div>
+                                        <div class="form-group">
+                                        
+                                        </div>
+                                        <!-- <div class="form-group">
+                                            <div class="custom-control custom-checkbox small">
+                                                <input type="checkbox" class="custom-control-input" id="remember me">
+                                                <label class="custom-control-label" for="customCheck">Remember
+                                                    Me</label>
+                                            </div> -->
+                                        </div>
+                                        <!-- <a href="#" id="btn1" class="btn btn-primary btn-user btn-block">
+                                            Login
+                                        </a> -->
+                                       
+                                        
+                                        <hr>
+                                        <!-- <a href="index.html" class="btn btn-google btn-user btn-block">
+                                            <i class="fab fa-google fa-fw"></i> Login with Google
+                                        </a> -->
+                                        <!-- <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+                                        </a> -->
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <!-- <a class="small" href="forgot-password.html">Forgot Password?</a> -->
+                                    </div>
+                                    <div class="text-center">
+                                        <!-- <a class="small" href="register.html">Create an Account!</a> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+    crossorigin="anonymous"></script>
+
+
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script> -->
+
+
+<!--Ajax for login-->
+<
+
+
+
+
+
+{% endblock %}
