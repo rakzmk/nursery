@@ -2,10 +2,7 @@
 {% load static %}
 {% block content %}
 
-<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
-<!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
-<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
-<!------ Include the above in your HEAD tag ---------->
+
 <link rel="stylesheet" href="{% static 'css/userprofile.css' %}">
 
 <style>
@@ -18,19 +15,50 @@
     <!-- <form method=""> -->
     <div class="row">
         <div class="col-md-4">
+            
+        <form class="userimage" action="{% url 'userimage' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="custom-file">
+                <img id="img1" src="{{user2.imageurl4}}" style="width: 12em; height: 12em;" alt=""><br>
+                
+                <label style = "text-transform: capitalize;color:darkblue" class="" for="exampleFormControlFile1">{{user1.first_name}}</label>
+                <input type="file" class="form-control-file" id="image1" name="image1" required>
+                
+                <!-- <input type="file" class="custom-file-input" id="image1" value="">
+                <label class="custom-file-label" for="customFile">Choose Image1</label> -->
+                <input type="submit" class="btn btn-primary" value="update photo" id="submit"></a>
+              </div>
+           
+
             <div class="profile-img">
-                <img src="{% static 'images/rakz.jpg' %}" alt="" />
-                <div class="file btn btn-lg btn-primary">
-                    Change Photo
-                    <input type="file" name="file" />
-                </div>
+                <div class="custom-file">
+                    <!-- <img id="img1" src="{{user.imageurl4}}" style="width: 6em; height: 7em;" alt=""><br> -->
+                    
+                    <!-- <label class="" for="exampleFormControlFile1">Image1</label> -->
+                    <!-- <input type="file" class="form-control-file" id="image1" name="image1" required> -->
+                    
+                    <!-- <input type="file" class="custom-file-input" id="image1" value="">
+                    <label class="custom-file-label" for="customFile">Choose Image1</label> -->
+                    <!-- <input type="submit" class="btn btn-primary" id="submit"></a> -->
+                  </div>
+                <!-- <img src="{% static 'images/rakz.jpg' %}" alt="" /> -->
+                <!-- <div class="file btn btn-lg btn-primary"> -->
+                    <!-- Change Photo -->
+                    <!-- <input id="user_image" type="file" name="file" /> -->
+                <!-- </div> -->
+                
             </div>
+        </form>
+        </div>
+        <div style="height: 30px;">
+
         </div>
         <div class="col-md-6">
 
             <div class="profile-head">
                 <h3 style="text-transform: capitalize">
-                    Welcome :  <span style="color:blue;">{{user1.first_name}} {{user1.last_name}}</span> 
+                    Welcome   <span style="color:blue;">{{user1.first_name}}</span> your profile page</span> 
                 </h3>
                 <h6>
                     <!-- Edit Profile -->
@@ -39,6 +67,7 @@
                 <div class="mt-5">
 
                 </div>
+                
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
@@ -50,6 +79,9 @@
                     </li>
                 </ul>
             </div>
+        </div>
+        <div>
+            <!-- <a href="{% url 'changepassword' %}">edit password</a> -->
         </div>
 
         <div class="col-md-2">
@@ -73,6 +105,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
+                            
                         </div>
                         <div class="modal-body">
 
@@ -231,8 +264,8 @@
             <!-- </div>
      </div> -->
 
-            <!--modal end-->
-
+    
+ 
 
 
 
@@ -246,7 +279,165 @@
         </div>
 
 
+    
+
+<!-- modal for password change -->
+
+<div class="col-md-2">
+
+    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Add Shipping Address -->
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade2" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
+        aria-hidden="true">
+        <div class="modal-dialog2" role="document">
+            <div class="modal-content2">
+                <div class="modal-header2">
+                    <h4 class="modal-title" id="exampleModalLabel1">Edit User Profile</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body2">
+
+                    <div class="container">
+                        <div class="row ">
+
+                            <div class="col-sm-12 col-lg-12 mb-3">
+                                <div class="checkout-address">
+                                    <!-- <div class="title-left">
+                            <h3>Add Shipping address</h3>
+                        </div> -->
+                                <form name="form2" id="form2" class="">
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <label for="Currentpwd">Current Password</label>
+                                            <input type="password" class="form-control" name="pwd" id="pwd"
+                                                placeholder="" value="">
+
+                                        </div>
+                                    
+                                    <div class="col-md-12 mb-3">
+                                        <label for="newpassword">New password</label>
+                                        <input type="password" class="form-control" name="newpwd" id="newpwd"
+                                            placeholder="" value="">
+
+                                    </div>
+                            </div>
+                                <div class="col-md-12 mb-3">
+                                    <label for="confpasswordusername" >Confirm Password</label>
+
+                                    <input type="password" class="form-control" name="conpwd" id="conpwd"
+                                        placeholder="" value="">
+
+                                </div>
+
+                            </div>
+                           
+                            </div>
+                            <!-- <div class="col-md-12 mb-3">
+                                <label for="address">User Name</label>
+                                <input type="text" class="form-control" name="username" id="username"
+                                    placeholder="" value="{{user1.username}}"> -->
+
+                            <!-- </div> -->
+
+
+                            <div>
+                                <span id="error3"></span>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-12 mb-3">
+
+                                    <div class="col-12 d-flex shopping-box"> <button style="color:white;"
+                                            name="pwdbut" id="pwdbut" type="button"
+                                            class="ml-auto btn hvr-hover">Change password </button>
+                                    </div>
+                                </div>
+                                    </form>
+                                </div>
+                            </div>
+                        
+                        </div>
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> -->
+
+                        <!-- <script src="https://code.jquery.com/jquery-3.5.1.js" -->
+                        <!-- integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" -->
+                        <!-- crossorigin="anonymous"></script> -->
+
+
+
+                    <script>
+
+                $('#pwdbut').click(function () {
+                    var pwd = $('#pwd').val()
+                    var newpwd = $('#newpwd').val()
+                    var conpwd = $('#conpwd').val()
+                  
+                    console.log(pwd)
+
+                    var data = {
+                        'csrfmiddlewaretoken': '{{csrf_token}}',
+                        'pwd': pwd,
+                        'newpwd': newpwd,
+                        'conpwd': conpwd,
+       
+                    }
+                    if (pwd.length<3 || pwd.length>50) {
+                        $('#error3').html("Please enter name min 4 characters")
+
+                    }
+                    else if (newpwd != conpwd) {
+                        $('#error3').html("Please enter same password")
+                    }
+        
+
+                    else {
+                        $.ajax({
+                            url: '/passwordchange/',
+                            method: 'POST',
+                            data: data,
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data == 'true') {
+                                    alert("Password Changed successfully")
+                                    window.location.replace('/userprofile/')
+                                }
+                                if (data == 'false') {
+
+                                    $("#error2").html("Mobile no already exists")
+                                }
+                                
+                            }
+
+                        })
+                    }
+                })
+
+            </script> 
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <!-- <button type="btn1" class="btn btn-primary"></button> -->
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
+   
+
+</div>
+
+
+<!-- end of password change modal -->
+
+
     <!-- about under photo -->
 
     <div class="row">
@@ -270,9 +461,10 @@
                         </label>
                     </div>
                     <div class="col-md-12">
-                        <label>Phone :<span style="color: blue; font-size: 1rem;"> {{user.mobile}} </span> </label>
+                        <label>Phone :<span style="color: blue; font-size: 1rem;"> {{user2.mobile}} </span> </label>
                     </div>
                 </div>
+                
                 
                 <!-- <a href="">Website Link</a><br/>
                             <a href="">Bootsnipp Profile</a><br/>
@@ -284,13 +476,23 @@
                             <a href="">WooCommerce</a><br/>
                             <a href="">PHP, .Net</a><br/> -->
             </div>
+            
             <div> <a style="color:blanchedalmond" type="button" data-toggle="modal" data-target="#exampleModal"
                 class="btn hvr-hover ml-5">
-                Edit user profile</a> </div>
+                Edit user profile</a> 
+            
+                <div class="ml-5 mt-2" >
+                    <a href="{% url 'changepassword' %}">edit password</a>
+                </div>
+            </div>
            
         </div>
+        
         <!-- about under photo -->
 
+
+
+        
         <!-- orderlist -->
         <div class="col-md-8">
             <div class="tab-content profile-tab" id="myTabContent">
@@ -453,6 +655,21 @@
     </div>
 
 </div>
+<script>
+    function readURL1(input){
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
 
+            reader.onload = function(e) {
+                $('#img1').attr('src', e.target.result);
+            }
+        reader.readAsDataURL(input.files[0]); //convert to base64 string
+        } 
+    }
+        $('#image1').change(function(){
+            readURL1(this);
+        });
+    
+    </script>
 
 {% endblock %}

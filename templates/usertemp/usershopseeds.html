@@ -135,7 +135,7 @@
                                     </div>
                                 </div>
                                 <div class="list-group-collapse sub-men">
-                                    <a class="list-group-item list-group-item-action" href="#sub-men2" data-toggle="collapse" aria-expanded="false" aria-controls="sub-men2">Footwear 
+                                    <a class="list-group-item list-group-item-action" href="#sub-men2" data-toggle="collapse" aria-expanded="false" aria-controls="sub-men2">Flowering 
 								<small class="text-muted">(50)</small>
 								</a>
                                     <div class="collapse" id="sub-men2" data-parent="#list-group-men">
@@ -153,19 +153,19 @@
                         </div>
                         <div class="filter-price-left">
                             <div class="title-left">
-                                <h3>Price</h3>
+                                <!-- <h3>Price</h3> -->
                             </div>
                             <div class="price-box-slider">
-                                <div id="slider-range" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 25%; width: 50%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 25%;"></span><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 75%;"></span></div>
+                                <!-- <div id="slider-range" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 25%; width: 50%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 25%;"></span><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 75%;"></span></div> -->
                                 <p>
-                                    <input type="text" id="amount" readonly="" style="border:0; color:#fbb714; font-weight:bold;">
-                                    <button class="btn hvr-hover" type="submit">Filter</button>
+                                    <!-- <input type="text" id="amount" readonly="" style="border:0; color:#fbb714; font-weight:bold;"> -->
+                                    <!-- <button class="btn hvr-hover" type="submit">Filter</button> -->
                                 </p>
                             </div>
                         </div>
                         <div class="filter-brand-left">
                             <div class="title-left">
-                                <h3>Brand</h3>
+                                <!-- <h3>Brand</h3> -->
                             </div>
                             <div class="brand-box" tabindex="1" style="overflow: hidden; outline: none;">
                                 <ul>
@@ -288,15 +288,16 @@
                                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                                         
                                                         </ul>
-                                                    
-                                                        <a class="cart" href="#">Add to Cart</a>
+                                                        <!-- <a id="addto" class="cart7" href="" dataprodi = "{{prod.id}}" value="">Add to Cart</a> -->
+                                                        
+                                                        <a class="addto_cart cart" href="" dataprodid = "{{prod.id}}" value="">Add to Cart</a>
                                                     </div>
                                                 </div>
                                                 <div class="why-text">
                                                     <a style="font:bold;font-size:1rem;color:darkgreen" href="{% url 'productdetail' prod.id %}">{{prod.product}}</a>
                                                     <!-- <h4 href="templates/usertemp/productdetail.html">{{prod.product}}</h4> -->
                                                     <br>
-                                                    <h5 style="font-family: Arial, Helvetica, sans-serif;"> ₹ {{prod.price}}</h5>
+                                                    <h5 id="trial" style="font-family: Arial, Helvetica, sans-serif;"> ₹ {{prod.price}}</h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -382,14 +383,53 @@
                                 </div>
                             </div>
                         </div>
-
+                    
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- End Shop Page -->
+    
+    
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <script>
+
+        $('.addto_cart').click(function() {
+            console.log("hello")
+            //var qty = $('.cart').val()
+            var qty = 1
+            var prodid = $(this).attr('dataprodid')
+            //var password1 = $('#pwd4').val()
+            console.log(prodid)
+            console.log("hello yaar")
+            var data = {
+                'csrfmiddlewaretoken': '{{csrf_token}}',
+                'qty': qty,
+                'id3': prodid,
+            }
+            $.ajax({
+                url: '/addtocart2/',
+                method: 'POST',
+                data: data,
+                dataType: 'json',
+                success: function (data) {
+                    if (data == 'true') {
+                    alert('Product added to the cart')
+                    //windows.location.reload('seedshop')
+                            
+                        }
+                        if (data == 'false') {
+                            alert("Product added to the cart")  
+    
+                    }
+                }
+                })
+        })
+        
+    
+    </script>
     <!-- Start Instagram Feed  -->
     
     <!-- End Instagram Feed  -->
@@ -410,11 +450,11 @@
     <a href="#" id="back-to-top" title="Back to top" >↑</a>
 
     <!-- ALL JS FILES -->
-    <script src="js/jquery-3.2.1.min.js"></script>
+    <!-- <script src="js/jquery-3.2.1.min.js"></script> 
     <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.min.js"></script> -->
     <!-- ALL PLUGINS -->
-    <script src="js/jquery.superslides.min.js"></script>
+    <!-- <script src="js/jquery.superslides.min.js"></script>
     <script src="js/bootstrap-select.js"></script>
     <script src="js/inewsticker.js"></script>
     <script src="js/bootsnav.js."></script>
@@ -426,8 +466,8 @@
     <script src="js/jquery.nicescroll.min.js"></script>
     <script src="js/form-validator.min.js"></script>
     <script src="js/contact-form-script.js"></script>
-    <script src="js/custom.js"></script><div role="dialog" id="baguetteBox-overlay"><div id="baguetteBox-slider"></div><button type="button" id="previous-button" aria-label="Previous" class="baguetteBox-button"><svg width="44" height="60"><polyline points="30 10 10 30 30 50" stroke="rgba(255,255,255,0.5)" stroke-width="4" stroke-linecap="butt" fill="none" stroke-linejoin="round"></polyline></svg></button><button type="button" id="next-button" aria-label="Next" class="baguetteBox-button"><svg width="44" height="60"><polyline points="14 10 34 30 14 50" stroke="rgba(255,255,255,0.5)" stroke-width="4" stroke-linecap="butt" fill="none" stroke-linejoin="round"></polyline></svg></button><button type="button" id="close-button" aria-label="Close" class="baguetteBox-button"><svg width="30" height="30"><g stroke="rgb(160,160,160)" stroke-width="4"><line x1="5" y1="5" x2="25" y2="25"></line><line x1="5" y1="25" x2="25" y2="5"></line></g></svg></button></div><div id="ascrail2000" class="nicescroll-rails nicescroll-rails-vr" style="width: 8px; z-index: auto; cursor: default; position: absolute; top: 949.4px; left: 451.6px; height: 259px; display: block; opacity: 1;"><div class="nicescroll-cursors" style="position: relative; top: 0px; float: right; width: 6px; height: 195px; background-color: rgb(155, 155, 156); border: 1px solid rgb(255, 255, 255); background-clip: padding-box; border-radius: 5px;"></div></div><div id="ascrail2000-hr" class="nicescroll-rails nicescroll-rails-hr" style="height: 8px; z-index: auto; top: 1200.4px; left: 204.6px; position: absolute; cursor: default; display: none; width: 247px; opacity: 1;"><div class="nicescroll-cursors" style="position: absolute; top: 0px; height: 6px; width: 255px; background-color: rgb(155, 155, 156); border: 1px solid rgb(255, 255, 255); background-clip: padding-box; border-radius: 5px; left: 0px;"></div></div>
-
+    <script src="js/custom.js"></script><div role="dialog" id="baguetteBox-overlay"><div id="baguetteBox-slider"></div><button type="button" id="previous-button" aria-label="Previous" class="baguetteBox-button"><svg width="44" height="60"><polyline points="30 10 10 30 30 50" stroke="rgba(255,255,255,0.5)" stroke-width="4" stroke-linecap="butt" fill="none" stroke-linejoin="round"></polyline></svg></button><button type="button" id="next-button" aria-label="Next" class="baguetteBox-button"><svg width="44" height="60"><polyline points="14 10 34 30 14 50" stroke="rgba(255,255,255,0.5)" stroke-width="4" stroke-linecap="butt" fill="none" stroke-linejoin="round"></polyline></svg></button><button type="button" id="close-button" aria-label="Close" class="baguetteBox-button"><svg width="30" height="30"><g stroke="rgb(160,160,160)" stroke-width="4"><line x1="5" y1="5" x2="25" y2="25"></line><line x1="5" y1="25" x2="25" y2="5"></line></g></svg></button></div><div id="ascrail2000" class="nicescroll-rails nicescroll-rails-vr" style="width: 8px; z-index: auto; cursor: default; position: absolute; top: 949.4px; left: 451.6px; height: 259px; display: block; opacity: 1;"><div class="nicescroll-cursors" style="position: relative; top: 0px; float: right; width: 6px; height: 0px; background-color: rgb(155, 155, 156); border: 1px solid rgb(255, 255, 255); background-clip: padding-box; border-radius: 5px;"></div></div><div id="ascrail2000-hr" class="nicescroll-rails nicescroll-rails-hr" style="height: 8px; z-index: auto; top: 1200.4px; left: 204.6px; position: absolute; cursor: default; display: none; width: 247px; opacity: 1;"><div class="nicescroll-cursors" style="position: absolute; top: 0px; height: 6px; width: 255px; background-color: rgb(155, 155, 156); border: 1px solid rgb(255, 255, 255); background-clip: padding-box; border-radius: 5px; left: 0px;"></div></div>
+ -->
 
 </div></body>
 

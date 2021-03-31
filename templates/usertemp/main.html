@@ -214,7 +214,7 @@
                                   
                                   src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_shopping_cart_48px-512.png" alt=""  > </a>
                                 </div>
-                                <div style="position: absolute;
+                                <!-- <div style="position: absolute;
                                 top: 0;
                                 right: 0;
                                 background-color: #FF6600;
@@ -222,7 +222,7 @@
                                 font-size: 9px;
                                 font-weight: bold;
                                 padding: 3px 6px;
-                                border-radius: 9px;margin-top: 2em;" class="cart-badge" placeholder="0">{{cart.count}}</div>
+                                border-radius: 9px;margin-top: 2em;" class="cart-badge" placeholder="0">1</div> -->
                               </div>
 
                              <!--End new cart -->
@@ -242,9 +242,12 @@
                 <!-- End Atribute Navigation -->
             </div>
             <div class="float-right mr-5">
+                {% if user.is_authenticated %}
+                <h4>Welcome :  <span style="color: rgb(23, 121, 3); font-weight: bold; text-transform: capitalize;">{{request.user}}</span></h4>
+                {% else %}
+                <h4>           <span style="color: rgb(23, 121, 3); font-weight: bold; text-transform: capitalize;">                </span></h4>
                 
-                <h4>Welcome,   <span style="color: rgb(23, 121, 3); font-weight: bold; text-transform: capitalize;">{{request.user}}</span></h4>
-                
+                {% endif %}
             </div>
             <!--Start Side Menu -->
             <div class="side">

@@ -89,15 +89,19 @@ def addproduct(request):
             ext = format.split('/')[-1]
             img2 = ContentFile(base64.b64decode(imgstr),name=productname+'.'+ ext)
             
+            image3 = request.POST ['imageurl3']
+            format, imgstr = image3.split(';base64,')
+            ext = format.split('/')[-1]
+            img3 = ContentFile(base64.b64decode(imgstr),name=productname+'.'+ ext)
             
-            #image1 = request.FILES.get('image1')
-            #image2 = request.FILES.get('image2')
-            image3 = request.FILES.get('image3')
+            # image1 = request.FILES.get('image1')
+            # image2 = request.FILES.get('image2')
+            # image3 = request.FILES.get('image3')
             print(category,productname,price,description)
             categ = Categories.objects.get(category=category)
             
             print (categ.category)
-            products = Products.objects.create(product=productname, price=price, description=description, category_id=categ.id, image1=img1,image2=img2,image3=image3)
+            products = Products.objects.create(product=productname, price=price, description=description, category_id=categ.id, image1=img1,image2=img2,image3=img3)
             products.save()
             return redirect (productlist)
             # return render(request, 'admintemp/addproduct.html')

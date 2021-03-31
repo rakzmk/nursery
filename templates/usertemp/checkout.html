@@ -309,7 +309,7 @@
                                 <input id="but5" name="address" type="radio"  onclick="add('{{address.id}}')" value="{{address.id}}">
                                 <label style="margin-left: 10px;color:blue;" class="" for="">Select</label>
                             </div>
-                            <div > <a style="color:rgb(1, 125, 5);" type="button" href="{% url 'deleteaddress' address.id %}" class="ml-auto btn">
+                            <div > <a id="deleteadd" style="color:rgb(1, 125, 5);" onclick="myFunction()" type="button" href="{% url 'deleteaddress' address.id %}" class="ml-auto btn">{% csrf_token %}
                                 Delete address</a> </div>
                                 
                                 <div > <a style="color:rgb(1, 125, 5);" onclick="add('{{address.id}}')" type="button" href="" value="{{address.id}}" id="but5" class="ml-auto btn">
@@ -406,15 +406,15 @@
                     
                     <input id="cod3" name="cod3" type="radio" class="" value="cod" required>
                     <!-- <input id="cod" name="cod3" type="radio" class="" onclick="cod()" value="cod" required> -->
-                    <label class="custom-control-label" for="credit">COD</label>
+                    <label class="custom-control-labe" for="credit">COD</label>
                 </div>
                 <div class="custom-control custom-radio">
                     <input id="razorpay" name="cod3" type="radio" class="" value="razor" required>
-                    <label class="custom-control-label" for="debit">Razor Pay</label>
+                    <label class="custom-control-labe" for="debit">Razor Pay</label>
                 </div>
                 <div class="custom-control custom-radio">
                     <input id="paypal" name="cod3" type="radio" class="" value="paypal" required>
-                    <label class="custom-control-label" for="paypal">Paypal</label>
+                    <label class="custom-control-labe" for="paypal">Paypal</label>
                 </div>
             </div>
 
@@ -632,6 +632,15 @@
 
 
 	</script> -->
+
+    <script>
+        $(document).on('click', '#deleteadd', function(){
+    
+            return confirm('Are you sure, you want to delete this address?');
+        })
+    </script>    
+    
+
 <script>
     function add(id){
     $.ajax({

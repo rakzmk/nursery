@@ -8,10 +8,14 @@ from .models import Cart, Address, Order
 from django.views.decorators.csrf import csrf_exempt
 #import razorpay
 import os
+import random
+from twilio.rest import Client
+from django.contrib.auth.hashers import check_password
 
 
 otp = 0
 phone_number = 0
+total_incart = 0
 
 # Create your views here.
 
@@ -23,6 +27,10 @@ def mainpage(request):
     if request.user.is_active == True and request.user.is_authenticated:
         cat = Categories.objects.all()
         cart = Cart.objects.filter(user=request.user)
+        cart = Cart.objects.filter(user_id=request.user)
+        
+       
+       
         context = {'cart': cart ,'category': cat}
         return render(request,'usertemp/index.html',context)
     else:
@@ -94,6 +102,7 @@ def usershop(request):
     #if request.user.is_authenticated:
             cat = Categories.objects.all()
             prod= Products.objects.all()
+           
             context = {'category':cat, 'product':prod}
             return render(request, 'usertemp/usershop.html', context)
 
@@ -106,6 +115,8 @@ def seedshop(request,id):
         if id==9:
             cat = Categories.objects.get(pk=id)
             product = Products.objects.filter(category=cat)
+
+            
             category = Categories.objects.all()
             context = {"product": product,'category': category}
             return render(request, 'usertemp/usershopseeds.html', context)
@@ -113,6 +124,9 @@ def seedshop(request,id):
         elif id == 10 :
             cat = Categories.objects.get(pk=id)
             product = Products.objects.filter(category=cat)
+            category = Categories.objects.all()
+            
+            
             category = Categories.objects.all()
             context = {"product": product,'category': category}
             return render(request, 'usertemp/usershopplanters.html', context)
@@ -128,6 +142,8 @@ def menubar(request,id):
         category = Categories.objects.all()
         cat = Categories.objects.get(pk=id)
         product = Products.objects.filter(category=cat)
+              
+        category = Categories.objects.all()
         context = {"product": product,'category': category}
         return render(request, 'usertemp/usershop.html',context)
         # if cat == 'Seeds' and cat == 'Planters':
@@ -148,6 +164,9 @@ def usercart(request):
             messages = "Your cart is Empty, Please add items to continue."
             cat = Categories.objects.all()
             product = Products.objects.all()
+            
+            
+            category = Categories.objects.all()
             context = {'messages':messages,'product':product,'category': cat}
             
         else:
@@ -173,6 +192,8 @@ def usercart(request):
             user = Cart.objects.filter(user=user_obj)
             product = Products.objects.all()
             cat = Categories.objects.all()
+
+              
           
             context = {'coupon_disc':coupon_disc,'total_price':total_price, 'tax':tax,'shipping':shipping, 'product':product,'category': cat,'cart': user, 'sub_total':sub_total,'grand_total':grand_total, 'user_cart':user_cart,'disc':disc}
         return render(request,'usertemp/usercart.html',context)
@@ -180,6 +201,7 @@ def usercart(request):
     else:
         cat = Categories.objects.all()
         product = Products.objects.all()
+      
         context = {'product':product,'category': cat}
         return render(request,'usertemp/login.html',context)
             
@@ -331,11 +353,22 @@ def deletecartprod(request,id):
 
 
 def usergallery(request):
+    if request.user.is_authenticated:
         category = Categories.objects.all()
         product = Products.objects.filter(category=category)
+        
+        category = Categories.objects.all()
         context = {"product": product, 'category':category}
         return render (request, 'usertemp/usergallery.html',context)
-
+    
+    else:
+        category = Categories.objects.all()
+        product = Products.objects.filter(category=category)
+        
+        category = Categories.objects.all()
+        context = {"product": product, 'category':category}
+        return render (request, 'usertemp/usergallery.html',context)
+        
 
 def productdetail(request,id):
         # cat = Categories.objects.get(pk=id)
@@ -473,24 +506,30 @@ def razorsuccess(request):
 def userprofile(request):
     if request.user.is_authenticated:
         user1 = User.objects.get(id=request.user.id)
-        print("hello", user1)
-        user = UserDetail.objects.get(user=user1)
+        user2 = UserDetail.objects.get(user=user1)
         value = Order.objects.filter(user_id=user1)
-        # value1 = Products.objects.get(price=value)
-        # print(value1.price, value1.count)
-        # for value in value1:
-        #     qty = value1.count
-        #     price = value1.price
-        #     total_price = qty*price
-        #     value.total_price = total_price
-            
-      
         cat = Categories.objects.all()
         product = Products.objects.all()
-        context = {'user':user,'user1':user1,'messages':messages,'product':product,'category': cat,'value':value}
+        category = Categories.objects.all()
+        context = {'user2':user2,'user1':user1,'messages':messages,'product':product,'category': cat,'value':value}
         return render(request, 'usertemp/userprofile.html',context)
+    else:
+        return redirect(mainpage)   
         
-        
+def userimage(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            user1 = request.user
+            image1 = request.FILES.get('image1')
+            user = UserDetail.objects.get(user_id=user1)
+            user.user_image1 = image1
+            user.save()
+            return redirect('userprofile')
+            
+
+
+
+
 def edituserprofile(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -519,4 +558,110 @@ def edituserprofile(request):
                 return JsonResponse('true', safe=False)
     else:
         return redirect (login)
-         
+
+
+def changepassword(request):
+    if request.user.is_authenticated:
+        user = request.user
+        user1 = User.objects.get(username=user)
+        
+        if request.method == 'POST':
+            pwd = request.POST ['pwd']
+            newpwd = request.POST ['newpwd']
+            #conpwd = method.POST ['conpwd']
+            oldpassword = request.user.password
+            passwdchk = check_password(pwd,oldpassword)
+        
+            if passwdchk != True:
+                return JsonResponse('false', safe=False)
+            else: 
+                user.set_password(newpwd)
+                user.save()
+                return JsonResponse('true',safe=False)
+
+
+        else:
+            cat = Categories.objects.all()
+            product = Products.objects.all()
+            category = Categories.objects.all()
+            context = {'product':product,'category': cat}
+            return render(request,'usertemp/changepassword.html',context)
+    
+    else:
+        return redirect (login)
+
+
+
+def otp_generate(request):
+    #return render (request,'usertemp/loginmobile.html')
+    if request.method == 'POST':
+        phone_number = request.POST['mobile']
+        if UserDetail.objects.filter(mobile= phone_number).exists():
+            user1 = UserDetail.objects.get(mobile= phone_number)
+            #baseuser = user1.user
+            #print("helooo",baseuser)
+            request.session['phone'] = phone_number
+            if user1 is not None:
+                random_number = random.randint(1000, 9999)
+                global otp
+                otp = random_number
+                print(otp)
+                account_sid ='AC470f5283fa04d03253312e5df5e3a0bc'
+                auth_token = '6465318935c483a411c670e4941de3ff'
+                client = Client(account_sid, auth_token)
+
+                message = client.messages.create(
+                    body = f"Your OTP is {otp}",
+                    from_ = '+12037796637',
+                    to=f'+918590719050'
+                )
+
+                #context = {'user':user1}
+                return JsonResponse('true', safe=False)
+            else:
+                return JsonResponse('false', safe=False)
+        else:
+            return JsonResponse('false1', safe=False)
+            
+    else:
+        return render (request,'usertemp/loginmobile.html')
+
+def otp_validate(request):
+    if request.method == 'POST':
+        print("reached herre")
+        phone = request.session['phone']
+        user1 = UserDetail.objects.get(mobile=phone)
+        print("reached herre mobilr")
+        baseuser = user1.user
+        user_otp = request.POST ['otp']
+        print(user_otp)
+        global otp
+        print(user_otp)
+        if otp == int(user_otp):
+            auth.login(request, baseuser)
+            print("reached herre monnmn")
+            return JsonResponse ('true', safe=False)
+        else:
+            return JsonResponse ('false', safe=False)
+            
+    else:
+        return render(request,'usertemp/loginmob_otp.html')
+
+def addtocart2(request):
+    if request.method =='POST':
+        qty = request.POST['qty']
+        id3 = request.POST['id3']
+        print("reached hereeee")
+        cartprod = Products.objects.get(pk=id3)
+        #products = Products.objects.filter(product=cartprod)
+        if Cart.objects.filter(product=cartprod, user=request.user).exists():
+            add = Cart.objects.get(product=cartprod, user=request.user)
+            add.count = add.count + int(qty)
+            add.save()
+            return JsonResponse('true', safe=False)
+        else:
+            Cart.objects.create(count=qty, product=cartprod,user=request.user)
+            return JsonResponse('false', safe=False)
+        
+    else:
+        return redirect(login)

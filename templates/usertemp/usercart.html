@@ -85,9 +85,9 @@
                                     
                                     <td class="remove-product"><a class="fas fa-time" href="{% url 'deletecartprod' cart.id %}"></a>
                                         
-                                    <form action="{% url 'deletecartprod' cart.id %}" onclick="myFunction()" method="POST" class="d-inline"> {% csrf_token %}
+                                    <form  action="{% url 'deletecartprod' cart.id %}" onclick="myFunction()" method="POST" class="d-inline"> {% csrf_token %}
                 
-                                        <input type="submit" value="Remove" class="btn btn-danger btn-xs">
+                                        <input id="deletecart" type="submit" onclick="Myfunction()" value="Remove" class="btn btn-danger btn-xs">
                                     
                                     </form>
 
@@ -101,6 +101,7 @@
                         </table>
                        
                     </div>
+
 
 
 
@@ -183,6 +184,13 @@
     integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
     crossorigin="anonymous"></script>
 
+
+    <script>
+        $(document).on('click', '#deletecart', function(){
+    
+            return confirm('Are you sure, you want to remove the product from cart');
+        })
+    </script>    
 <!--Ajax for login-->
 <!-- <script>
 $(".button").on("click", function(){
@@ -224,7 +232,7 @@ $(".button").on("click", function(){
         //var add = parseInt(qty) + 1
        //$("#here").load("#here > *");
        var price = $('#qty5-'+id).attr("data-price");     
-       var total = parseInt(price) +parseInt(qty * price) ;
+       var total = parseInt(price) + parseInt(qty * price) ;
        //document.getElementById('qty6-'+id).innerHTML ='₹ ' + total + '.00';
 
         var data = {

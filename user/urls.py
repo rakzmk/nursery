@@ -31,6 +31,11 @@ urlpatterns = [
     path('razorpaypage/',views.razorpaypage,name='razorpaypage'),
     path('userprofile/', views.userprofile, name = 'userprofile'),
     path('edituserprofile/',views.edituserprofile, name='edituserprofile'),
+    path('otp_generate/', views.otp_generate, name='otp_generate'),
+    path('otp_validate/', views.otp_validate,name='otp_validate'),
+    path('userimage/',views.userimage,name='userimage'),
+    path('changepassword/',views.changepassword,name='changepassword'),
+    path('addtocart2/',views.addtocart2, name='addtocart2'),
     
     # path('paymentrazor/', views.paymentrazor, name='paymentraor'),
     # path('paymentpaypal/', views.paymentpaypal,name='paymentpaypal'),
